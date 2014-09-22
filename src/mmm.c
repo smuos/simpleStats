@@ -12,10 +12,13 @@ int comp (const void * elem1, const void * elem2)
     return 0;
 }
 
-void printNumArray (const int *arr)
+void printNumArray (const int len, const int *arr)
 {
   printf("Num Array:\n");
-  int len=sizeof(arr)/sizeof(arr[0]);
+  printf("%ld %ld", sizeof(arr), sizeof(arr[0]));
+  // int len=sizeof(arr)/sizeof(arr[0]);
+  printf("len: %d\n", len);
+  printf("arr: %d\n", *arr);
   for (int i=0; i<len; i++)
   {
     printf("%d\n", arr[i]);
@@ -35,12 +38,14 @@ int main (int argc, const char** argv)
     return 1;
   }
 
-  printf("Argc: %d\n", argc);
+  // printf("Argc: %d\n", argc);
   int len = argc-1;
 
   // Generate dynamic array with point to dynamic memory
   int *numArr;
-  numArr = malloc (argc * sizeof(numArr[0]));
+  // printf("len: %d\n", len);
+  // printf("size: %ld\n", sizeof(numArr[0]));
+  numArr = malloc (len * sizeof(numArr[0]));
 
   // Iterate over each argument and parse to int
   for (int i=0; i<len; i++)
@@ -51,7 +56,7 @@ int main (int argc, const char** argv)
     numArr[i] = num;
   }
 
-  printNumArray(numArr);
+  // printNumArray(len, numArr);
 
   // Calculate MEAN (average)
   int sum = 0;
@@ -65,10 +70,24 @@ int main (int argc, const char** argv)
 
   // Calculate Median
   // The median is the middle value, so I'll have to rewrite the list in order:
-  qsort (numArr, sizeof(numArr)/sizeof(*numArr), sizeof(*numArr), comp);
-  printNumArray(numArr);
-
   int median = 0;
+  qsort (numArr, len, sizeof(*numArr), comp);
+  // printNumArray(len, numArr);
+  int middle = (int) len/2;
+  // Check if even
+  if (len % 2 == 0)
+  {
+    // is even
+    // when there are an even amount of numbers things are slightly different.
+    // In that case we need to find the middle pair of numbers,
+    // and then find the value that would be half way between them. This is easily done by adding them together and dividing by two.
+    int a = numArr[middle];
+    int b = numArr[middle+1];
+    median = (a/b);
+  } else {
+    // is odd
+    median = numArr[middle];
+  }
   printf("Median:\t%d\n", median);
 
   // Calculate Mode

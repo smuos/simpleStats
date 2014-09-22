@@ -65,12 +65,12 @@ int main (int argc, const char** argv)
   {
     sum += numArr[i];
   }
-  int mean = sum/len;
-  printf("Mean:\t%d\n",mean);
+  double mean = sum/len;
+  printf("Mean:\t%lf\n",mean);
 
   // Calculate Median
   // The median is the middle value, so I'll have to rewrite the list in order:
-  int median = 0;
+  double median = 0;
   qsort (numArr, len, sizeof(*numArr), comp);
   // printNumArray(len, numArr);
   int middle = (int) len/2;
@@ -83,17 +83,41 @@ int main (int argc, const char** argv)
     // and then find the value that would be half way between them. This is easily done by adding them together and dividing by two.
     int a = numArr[middle];
     int b = numArr[middle+1];
-    median = (a/b);
+    // printf("%d \t %d\n", a,b);
+    median = (a+b)/2;
   } else {
     // is odd
     median = numArr[middle];
   }
-  printf("Median:\t%d\n", median);
+  printf("Median:\t%lf\n", median);
 
   // Calculate Mode
   // The mode is the number that is repeated more often than any other, so 13 is the mode.
-  int mode = 0;
-
+  // Note: Some source code below
+  // referenced from http://stackoverflow.com/a/19920690/2578205
+  // Setup
+  int number = numArr[0];
+  int mode = number;
+  int count = 1;
+  int countMode = 1;
+  // Iterate to find the mode
+  for (int i=1; i<len; i++)
+  {
+        if (numArr[i] == number)
+        { // count occurrences of the current number
+           countMode++;
+        }
+        else
+        { // now this is a different number
+              if (count > countMode)
+              {
+                    countMode = count; // mode is the biggest ocurrences
+                    mode = number;
+              }
+             count = 1; // reset count for the new number
+             number = numArr[i];
+    }
+  }
   printf("Mode:\t%d\n", mode);
 
   return 0;

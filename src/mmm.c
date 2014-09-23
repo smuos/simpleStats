@@ -163,6 +163,11 @@ int main (int argc, const char** argv)
   // Generate dynamic array with point to dynamic memory
   int *numArr;
   numArr = malloc (len * sizeof(numArr[0]));
+  if (numArr == NULL)
+  {
+     fprintf(stderr, "%s: Could not allocate memory.\n", argv[0]);
+     return (-1);
+  }
 
   // Iterate over each argument and parse to int
   for (int i=0; i<len; i++)
@@ -180,8 +185,8 @@ int main (int argc, const char** argv)
   // it is the parent, or is the child.
   if (rc < -1) {
       // Error: Could not cut another process
-      fprintf(stdout, "OS too hard, could not cut.\n");
-      exit(0);
+      fprintf(stderr, "OS too hard, could not cut.\n");
+      exit(rc);
   } else if (rc == 0) {
       // Is child
 

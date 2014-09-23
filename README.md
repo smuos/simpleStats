@@ -11,8 +11,8 @@ You have been given code that reads numbers as command line arguments and sorts 
 Create a copy of `sort.c` named `mm.c`.
 Change `mm.c` to implement the following features.
 
-- [ ] Add a function, `mean()`,  to `mm.c` to calculate the mean
-- [ ] Add a function, `median()`,  to `mm.c` to calculate the median
+- [x] Add a function, `mean()`,  to `mm.c` to calculate the mean
+- [x] Add a function, `median()`,  to `mm.c` to calculate the median
 - [x] Make mm.c fork(), have the parent call mean() and child call median()
 - [x] Child should print the results of median()
 - [x] Parent should print the results of mean()

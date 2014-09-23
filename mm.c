@@ -12,6 +12,21 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+int mean(const void *a, int length, int size){
+    int sum = 0;
+    switch(size){
+        case sizeof(int):
+            for (int i = 0; i < length; i++)
+                sum += *((int*) a)
+            break;
+        case sizeof(double):
+            for (int i = 0; i < length; i++)
+                sum += *((double*) a)
+            break;
+
+   result = (double) sum/length
+}
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;

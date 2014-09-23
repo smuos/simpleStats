@@ -26,6 +26,16 @@ double mean(int* array, int size)
 	return ret;
 }
 
+//median()
+int median(int* array, int size)
+{
+	int ret=-1;
+	
+	int halfsize = size/2;
+	ret = array[halfsize];
+
+	return ret;
+}
 
 int main(int argc, char *argv[]) {
 
@@ -64,8 +74,13 @@ int main(int argc, char *argv[]) {
 	printf("\n\n");
 	
 	//test for mean()
-	double rtn = mean(pt, length);
-	printf("mean: %f\n", rtn);
+	double rtn1 = mean(pt, length);
+	printf("mean: %f\n", rtn1);
+
+	//test for median()
+	int rtn2 = median(pt, length);
+	printf("median: %d\n", rtn2);
+
 	
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 

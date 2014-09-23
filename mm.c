@@ -1,3 +1,6 @@
+// mm.c
+// Integer Mean/Median Calculator
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -13,21 +16,20 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
-// Calculuate the Mean
+// Calculate the Mean
 float mean (int *numbers, int length) {
     float sum = 0;
-    for (int i=0; i<length; i++)
-    {
+    for (int i=0; i<length; i++) {
         sum += numbers[i];
     }
     return sum / length;
 }
 
-// Calculuate the Median, assumes array is sorted
+// Calculate the Median, assumes array is sorted
 float median (int *numbers, int length) {
     int middleIndex = length / 2;
     if (length % 2 == 0) 
-        return (numbers[middleIndex - 1] + numbers[middleIndex]) / 2.0;
+        return (numbers[middleIndex - 1] + numbers[middleIndex]) / 2;
     else return numbers[middleIndex];
 }
 
@@ -61,7 +63,7 @@ int main(int argc, char *argv[]) {
     qsort(pt, length, sizeof(int), numcmp);
 
     // Print out numbers
-    fprintf(stdout, "%s:(%d) Sorted output is: \n", argv[0], getpid());
+    fprintf(stdout, "%s:(%d) Sorted output is: \n", argv[0], (int)getpid());
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
@@ -70,18 +72,19 @@ int main(int argc, char *argv[]) {
     // Fork the process
     int returnCode = fork();
     if (returnCode < 0) {
-        fprintf(stderr, "%s: DEBUG: fork failed: returnCode: %d.\n", argv[0], returnCode);
+        fprintf(stderr, "%s: DEBUG: fork failed: returnCode: %d.\n", argv[0],
+                returnCode);
     } else if (returnCode == 0) {
-        // Child Print Median
-        float calculatedMedian = median(pt, length);
-        fprintf(stdout, "\n%s:(%d C) Median is: %.3f", argv[0], getpid(), calculatedMedian);
+        // Child print median
+        fprintf(stdout, "\n%s:(%d C) Median is: %.3f", argv[0], (int)getpid(),
+                median(pt, length));
     } else if (returnCode > 0) {
-        // Parent Print Mean
-        float calculatedMean = mean(pt, length);
-        fprintf(stdout, "\n%s:(%d P) Mean is: %.3f", argv[0], getpid(), calculatedMean);
+        // Parent print mean after child
+        int wc = wait(NULL);
+        fprintf(stdout, "\n%s:(%d P, %d WC) Mean is: %.3f", argv[0], 
+                (int)getpid(), wc, mean(pt, length));
     }
 
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
-
     return 0;
 }

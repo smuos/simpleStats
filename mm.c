@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define debug 0
 
@@ -60,18 +61,25 @@ int main(int argc, char *argv[]) {
     qsort(pt, length, sizeof(int), numcmp);
 
     // Print out numbers
-    fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
+    fprintf(stdout, "%s:(%d) Sorted output is: \n", argv[0], getpid());
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
+    printf("\n"); // This is required otherwise it runs the for loop twice?
 
-    // Print Mean
-    float calculatedMean = mean(pt, length);
-    fprintf(stdout, "\n%s: Mean is: %.3f", argv[0], calculatedMean);
-
-    // Print Median
-    float calculatedMedian = median(pt, length);
-    fprintf(stdout, "\n%s: Median is: %.3f", argv[0], calculatedMedian);
+    // Fork the process
+    int returnCode = fork();
+    if (returnCode < 0) {
+        fprintf(stderr, "%s: DEBUG: fork failed: returnCode: %d.\n", argv[0], returnCode);
+    } else if (returnCode == 0) {
+        // Child Print Median
+        float calculatedMedian = median(pt, length);
+        fprintf(stdout, "\n%s:(%d C) Median is: %.3f", argv[0], getpid(), calculatedMedian);
+    } else if (returnCode > 0) {
+        // Parent Print Mean
+        float calculatedMean = mean(pt, length);
+        fprintf(stdout, "\n%s:(%d P) Mean is: %.3f", argv[0], getpid(), calculatedMean);
+    }
 
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 

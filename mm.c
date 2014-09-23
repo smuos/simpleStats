@@ -22,6 +22,14 @@ float mean (int *numbers, int length) {
     return sum / length;
 }
 
+// Calculuate the Median, assumes array is sorted
+float median (int *numbers, int length) {
+    int middleIndex = length / 2;
+    if (length % 2 == 0) 
+        return (numbers[middleIndex - 1] + numbers[middleIndex]) / 2.0;
+    else return numbers[middleIndex];
+}
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
@@ -60,6 +68,10 @@ int main(int argc, char *argv[]) {
     // Print Mean
     float calculatedMean = mean(pt, length);
     fprintf(stdout, "\n%s: Mean is: %.3f", argv[0], calculatedMean);
+
+    // Print Median
+    float calculatedMedian = median(pt, length);
+    fprintf(stdout, "\n%s: Median is: %.3f", argv[0], calculatedMedian);
 
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 

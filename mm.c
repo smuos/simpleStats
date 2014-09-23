@@ -12,6 +12,16 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+// Calculuate the Mean
+float mean (int *numbers, int length) {
+    float sum = 0;
+    for (int i=0; i<length; i++)
+    {
+        sum += numbers[i];
+    }
+    return sum / length;
+}
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
@@ -46,6 +56,11 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
+
+    // Print Mean
+    float calculatedMean = mean(pt, length);
+    fprintf(stdout, "\n%s: Mean is: %.3f", argv[0], calculatedMean);
+
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
     return 0;

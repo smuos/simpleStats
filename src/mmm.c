@@ -1,17 +1,41 @@
 /* strtol example */
 #include <stdio.h>      /* printf */
 #include <stdlib.h>     /* strtol */
+#include <unistd.h>
 
 // === Helpers ===
+/**
+Compare function used with qsort
+Source code referenced from http://stackoverflow.com/a/1788048/2578205
+
+@param elem1 First item in comparison.
+@param elem2 Second item in comparison.
+@return integer representing comparison between elem1 and elem2
+*/
 int comp (const void * elem1, const void * elem2)
 {
-    int f = *((int*)elem1);
-    int s = *((int*)elem2);
-    if (f > s) return  1;
-    if (f < s) return -1;
-    return 0;
+  // Cast void* to int
+  int f = *((int*)elem1);
+  int s = *((int*)elem2);
+  /*
+  // To elaborate
+  // Cast void* to int*
+  int *pointer = (int *)voidPtr;
+  // Derefernce pointer to int value
+  int val = *(pointer);
+  */
+  if (f > s) return  1;
+  if (f < s) return -1;
+  return 0;
 }
 
+/**
+Print Number Array
+
+@param len Length of array.
+@param arr The array.
+@return void
+*/
 void printNumArray (const int len, const int *arr)
 {
   printf("Num Array:\n");
@@ -21,13 +45,20 @@ void printNumArray (const int len, const int *arr)
   printf("arr: %d\n", *arr);
   for (int i=0; i<len; i++)
   {
-    printf("%d\n", arr[i]);
+    printf("%d: %d\n", i, arr[i]);
   }
   printf("\n");
   return;
 }
 
 // === Main ===
+/**
+Start of program
+
+@param argc argument count
+@param argv argument vector
+@return an integer indicating success or failure.
+*/
 int main (int argc, const char** argv)
 {
 
@@ -58,67 +89,89 @@ int main (int argc, const char** argv)
 
   // printNumArray(len, numArr);
 
-  // Calculate MEAN (average)
-  int sum = 0;
-  // int len=sizeof(numArr)/sizeof(numArr[0]);
-  for (int i=0; i<len; i++)
-  {
-    sum += numArr[i];
-  }
-  double mean = sum/len;
-  printf("Mean:\t%lf\n",mean);
+  // Fork and create a child process
+  int rc = fork();
 
-  // Calculate Median
-  // The median is the middle value, so I'll have to rewrite the list in order:
-  double median = 0;
-  qsort (numArr, len, sizeof(*numArr), comp);
-  // printNumArray(len, numArr);
-  int middle = (int) len/2;
-  // Check if even
-  if (len % 2 == 0)
-  {
-    // is even
-    // when there are an even amount of numbers things are slightly different.
-    // In that case we need to find the middle pair of numbers,
-    // and then find the value that would be half way between them. This is easily done by adding them together and dividing by two.
-    int a = numArr[middle];
-    int b = numArr[middle+1];
-    // printf("%d \t %d\n", a,b);
-    median = (a+b)/2;
-  } else {
-    // is odd
-    median = numArr[middle];
-  }
-  printf("Median:\t%lf\n", median);
+  // Run different code based on if there was an error,
+  // it is the parent, or is the child.
+  if (rc < -1) {
+      // Error: Could not cut another process
+      fprintf(stdout, "OS too hard, could not cut.\n");
+      exit(0);
+  } else if (rc == 0) {
+      // Is child
+      // fprintf(stderr, "Child can't talk to strangers.\n");
+      // printf("Hello, I am child (pid:%d)\n", (int) getpid());
 
-  // Calculate Mode
-  // The mode is the number that is repeated more often than any other, so 13 is the mode.
-  // Note: Some source code below
-  // referenced from http://stackoverflow.com/a/19920690/2578205
-  // Setup
-  int number = numArr[0];
-  int mode = number;
-  int count = 1;
-  int countMode = 1;
-  // Iterate to find the mode
-  for (int i=1; i<len; i++)
-  {
-        if (numArr[i] == number)
-        { // count occurrences of the current number
-           countMode++;
+      // Calculate Median
+      // The median is the middle value, so I'll have to rewrite the list in order:
+      double median = 0;
+      qsort (numArr, len, sizeof(*numArr), comp);
+      // printNumArray(len, numArr);
+      int middle = (int) len/2;
+      // Check if even
+      if (len % 2 == 0)
+      {
+        // is even
+        // when there are an even amount of numbers things are slightly different.
+        // In that case we need to find the middle pair of numbers,
+        // and then find the value that would be half way between them. This is easily done by adding them together and dividing by two.
+        int a = numArr[middle];
+        int b = numArr[middle+1];
+        // printf("%d \t %d\n", a,b);
+        median = (a+b)/2;
+      } else {
+        // is odd
+        median = numArr[middle];
+      }
+      printf("Median:\t%lf\n", median);
+
+      // Calculate Mode
+      // The mode is the number that is repeated more often than any other, so 13 is the mode.
+      // Note: Some source code below
+      // referenced from http://stackoverflow.com/a/19920690/2578205
+      // Setup
+      int number = numArr[0];
+      int mode = number;
+      int count = 1;
+      int countMode = 1;
+      // Iterate to find the mode
+      for (int i=1; i<len; i++)
+      {
+            if (numArr[i] == number)
+            { // count occurrences of the current number
+               countMode++;
+            }
+            else
+            { // now this is a different number
+                  if (count > countMode)
+                  {
+                        countMode = count; // mode is the biggest ocurrences
+                        mode = number;
+                  }
+                 count = 1; // reset count for the new number
+                 number = numArr[i];
         }
-        else
-        { // now this is a different number
-              if (count > countMode)
-              {
-                    countMode = count; // mode is the biggest ocurrences
-                    mode = number;
-              }
-             count = 1; // reset count for the new number
-             number = numArr[i];
-    }
+      }
+      printf("Mode:\t%d\n", mode);
+
+  } else if (rc > 0) {
+      // Is Parent
+      int wc = wait(NULL); //is child finished?
+      // printf("Please leave my child alone, I am %d (wc:%d) (pid:%d)\n",
+      //  getpid(), wc, (int) rc);
+
+       // Calculate MEAN (average)
+       int sum = 0;
+       // int len=sizeof(numArr)/sizeof(numArr[0]);
+       for (int i=0; i<len; i++)
+       {
+         sum += numArr[i];
+       }
+       double mean = sum/len;
+       printf("Mean:\t%lf\n",mean);
+
   }
-  printf("Mode:\t%d\n", mode);
 
   return 0;
 }

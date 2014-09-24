@@ -67,7 +67,10 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-    printf("\n"); // This is required otherwise it runs the for loop twice?
+    printf("\n");
+
+    // Flush stdout
+    fflush(stdout);
 
     // Fork the process
     int returnCode = fork();

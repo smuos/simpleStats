@@ -80,18 +80,24 @@ int main(int argc, char *argv[]) {
 
     // Sort numbers
     qsort(pt, length, sizeof(int), numcmp);
-
-    // Calculate the mean
-    double m = mean(pt, length, sizeof(int));
-   
-    // Calculate the median
-    double mm = median(pt, length);
-
-    // Print the mean:
-    fprintf(stdout, "%s: The mean is %f \n", argv[0], m);
     
-    // Print the median:
-    fprintf(stdout, "%s: The median is %f \n", argv[0], mm);
+    int rc = fork(NULL);
+    double m;
+    if (rc < 0)
+        exit(-1);
+    else if (rc == 0){
+        // Calculate the median
+        m = median(pt, length); 
+    }
+    else{
+        wait(NULL);
+        // Calculate the mean
+        m = mean(pt, length, sizeof(int));
+    }
+   
+
+    // Print the mean?:
+    fprintf(stdout, "%s: The mean? is %f \n", argv[0], m);
 
     // Print out sorted numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);

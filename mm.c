@@ -42,15 +42,13 @@ double mean(const void *a, int length, int size){
  * value, or the average of the two median values
  */
 double median(const int *a, int length){
-    double result;
     if (length % 2 == 0)
-        result = (double) (*((int*) (a + length/2) - 1) + *((int*) (a + length/2))) / 2;
+        // Find the average of the two median numbers
+        return (double) (*((int*) (a + length/2) - 1) + *((int*) (a + length/2))) / 2;
     else
-        result = *((int*) (a + (length+1)/2 - 1));
-    return result;
+        // Return the median number
+        return *((int*) (a + (length+1)/2 - 1));
 }
-
-
 
 int main(int argc, char *argv[]) {
 
@@ -81,7 +79,7 @@ int main(int argc, char *argv[]) {
     // Sort numbers
     qsort(pt, length, sizeof(int), numcmp);
     
-    int rc = fork(NULL);
+    int rc = fork();
     double m;
     
     // Exit with error if fork() failed
@@ -95,12 +93,13 @@ int main(int argc, char *argv[]) {
         // Print the median:
         fprintf(stdout, "%s: The median is %f \n", argv[0], m);     
         
-        // the child is finished
+        // the child has terminated normally
         exit(0);
     }
     //--------- Parent code -----------//
     
     // wait for the child to finish
+    // Don't bother recording the status
     wait(NULL);
     
     // Calculate the mean
@@ -114,7 +113,8 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
+    // Program has terminated normally
+    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
     return 0;
 }

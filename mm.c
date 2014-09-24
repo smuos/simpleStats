@@ -44,7 +44,7 @@ double mean(const void *a, int length, int size){
 double median(const int *a, int length){
     double result;
     if (length % 2 == 0)
-        result = (double) (*((int*) (a + length/2) - 1) + *((int*) (a + length/2)) ) / 2;
+        result = (double) (*((int*) (a + length/2) - 1) + *((int*) (a + length/2))) / 2;
     else
         result = *((int*) (a + (length+1)/2 - 1));
     return result;
@@ -83,8 +83,11 @@ int main(int argc, char *argv[]) {
     
     int rc = fork(NULL);
     double m;
+    
+    // Exit with error if fork() failed
     if (rc < 0)
         exit(-1);
+    // the child calculates the median
     else if (rc == 0){
         // Calculate the median
         m = median(pt, length);
@@ -92,16 +95,19 @@ int main(int argc, char *argv[]) {
         // Print the median:
         fprintf(stdout, "%s: The median is %f \n", argv[0], m);     
         
+        // the child is finished
         exit(0);
     }
-    else{
-        wait(NULL);
-        // Calculate the mean
-        m = mean(pt, length, sizeof(int));
+    //--------- Parent code -----------//
+    
+    // wait for the child to finish
+    wait(NULL);
+    
+    // Calculate the mean
+    m = mean(pt, length, sizeof(int));
         
-        // Print the mean:
-        fprintf(stdout, "%s: The mean is %f \n", argv[0], m);     }
-   
+    // Print the mean:
+    fprintf(stdout, "%s: The mean is %f \n", argv[0], m);     
 
     // Print out sorted numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);

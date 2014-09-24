@@ -37,6 +37,21 @@ double mean(const void *a, int length, int size){
    return (double) sum / length; // Return the average
 }
 
+/*/ Takes a pointer to a sorted array of ints and the
+ * length of the array and returns a double,the median
+ * value, or the average of the two median values
+ */
+double median(const int *a, int length){
+    double result;
+    if (length % 2 == 0)
+        result = (*((int*) (a + length/2) - 1) + *((int*) (a + length/2)) ) / 2;
+    else
+        result = *((int*) (a + (length+1)/2 - 1));
+    return result;
+}
+
+
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
@@ -68,9 +83,16 @@ int main(int argc, char *argv[]) {
 
     // Calculate the mean
     double m = mean(pt, length, sizeof(int));
+   
+    // Calculate the median
+    double mm = median(pt, length);
+
     // Print the mean:
     fprintf(stdout, "%s: The mean is %f \n", argv[0], m);
     
+    // Print the median:
+    fprintf(stdout, "%s: The median is %f \n", argv[0], mm);
+
     // Print out sorted numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
     for (i=0; i<length; i++) {

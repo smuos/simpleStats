@@ -25,6 +25,13 @@ int mean( int *theArray, int arrayLength)
 	return sumOfArray / arrayLength;
 }//end mean
 
+//the median function
+int median(int *theArray, int arrayLength)
+{
+	int middleNum = arraylength / 2;
+	return theArray[middleNum];
+}//end median
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;

@@ -12,19 +12,29 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
-int mean(const void *a, int length, int size){
-    int sum = 0;
-    switch(size){
+/*/
+ * Takes a pointer to an 
+ * array, the length of the array, and the size 
+ * of the array elements (double or int),
+ * and returns a double, the average of the 
+ * elements.
+ */
+double mean(const void *a, int length, int size){
+    double sum = 0.0;
+    switch(size){ // What type of array do we have?
+        // Add up the elements
         case sizeof(int):
             for (int i = 0; i < length; i++)
-                sum += *((int*) a)
+                sum += *((int*)(a + i*size));
             break;
         case sizeof(double):
             for (int i = 0; i < length; i++)
-                sum += *((double*) a)
+                sum += *((double*) (a + i*size));
             break;
-
-   result = (double) sum/length
+        default: // Exit with error on incorrect input
+            exit(-1);
+    }
+   return (double) sum / length; // Return the average
 }
 
 int main(int argc, char *argv[]) {
@@ -56,7 +66,12 @@ int main(int argc, char *argv[]) {
     // Sort numbers
     qsort(pt, length, sizeof(int), numcmp);
 
-    // Print out numbers
+    // Calculate the mean
+    double m = mean(pt, length, sizeof(int));
+    // Print the mean:
+    fprintf(stdout, "%s: The mean is %f \n", argv[0], m);
+    
+    // Print out sorted numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);

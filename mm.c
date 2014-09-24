@@ -15,14 +15,14 @@ int numcmp (const void *a, const void *b) {
 //Function to calculate the mean 
 int mean( int *theArray, int arrayLength)
 {
-int sumOfArray = 0;
+	int sumOfArray = 0;
+	int i;
 
-for( int i = 0; i < arrayLength; i++)
-{
-sumOfArray = sumOfArray + theArray[i];
-}
+	for(i = 0; i < arrayLength; i++){
+		sumOfArray = sumOfArray + theArray[i];
+	}	
 
-return sumOfArray / arrayLength;
+	return sumOfArray / arrayLength;
 }//end mean
 
 int main(int argc, char *argv[]) {

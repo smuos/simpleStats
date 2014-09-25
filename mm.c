@@ -21,12 +21,20 @@ int numcmp (const void *a, const void *b) {
 
 // Function to calculate the mean
 double mean (int *num, int length) {
-    float sum = 0;
+    double sum = 0;
     for (int i=0; i<length; i++)
     {
         sum += num[i];
     }
     return sum / length;
+}
+
+// Function to calculate the median
+double median (int *num, int length)  {
+    int midIndex = length / 2;
+    if (length%2 == 0)
+        return (num[midIndex-1] + num[midIndex]) / 2;
+    else return num[midIndex];
 }
 
 int main(int argc, char *argv[]) {

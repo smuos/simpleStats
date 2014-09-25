@@ -22,10 +22,9 @@ int numcmp (const void *a, const void *b) {
 // Function to calculate the mean
 double mean (int *num, int length) {
     double sum = 0;
-    for (int i=0; i<length; i++)
-    {
+    int i;
+    for ( i=0; i<length; i++)
         sum += num[i];
-    }
     return sum / length;
 }
 

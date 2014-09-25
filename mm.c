@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define debug 0
 
@@ -90,12 +91,15 @@ int main(int argc, char *argv[]) {
 
 	else if(rc == 0)
 	{
-
+	//child
+        fprintf(stdout, "\n%d ", median(pt, length));
 	}
 	
 	else if (rc > 0)
 	{
-
+        //parent
+	int waitCode  = wait(NULL);
+	fprintf(stdout, "\n%d ", mean(pt, length));
 	}
 
 

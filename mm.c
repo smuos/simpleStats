@@ -12,6 +12,18 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+int mean(int* list, int length){
+    int m=0;//m is the mean that will be calculated then return
+    int i;  //a counter
+
+    for (i=0; i<length; i++) {
+       m+=list[i];// accumulate all the data in the list string
+    }
+    m = m/length;//the mean is equal to the total amount divided by how many term
+
+    return m;
+}
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
@@ -47,6 +59,6 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "%d ", pt[i]);
     }
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
-
+    fprintf(stdout, "mean: %d (FYI: the mean will be round up)\n", mean(pt, length));
     return 0;
 }

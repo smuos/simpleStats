@@ -12,6 +12,7 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+/* mean and median functions */
 int mean(int* pt,int length) {
 
     int i = 0;
@@ -25,9 +26,23 @@ int mean(int* pt,int length) {
     return mean;
 }
 
+int median(int* pt,int length){
+    int middle, median;
+
+    middle = (length / 2);
+    median = pt[middle];
+
+    return median;
+
+}
+
+/* -------------------------- */
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
+    /* my vars */
+    int meanVal, medianVal;
     
     // Check for proper usage
     if (argc < 2) {
@@ -62,8 +77,11 @@ int main(int argc, char *argv[]) {
 
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
-    /* call mean() */
-    /*mean(pt, length); */
+    /* call methods */
+    meanVal = mean(pt, length); 
+    medianVal = median(pt, length);
+    fprintf(stdout, "mean value: %d \n", meanVal);
+    fprintf(stdout, "median value: %d \n", medianVal);
 
     return 0;
 }

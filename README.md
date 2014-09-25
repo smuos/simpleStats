@@ -19,6 +19,11 @@ Change mm.c to immplement the following features.
 Each feature listed above has a corresponding issue.
 Please use [smart commits](https://help.github.com/articles/closing-issues-via-commit-messages) to address each issue. 
 
+## Submission
+
+As before, submit your assignment as a Pull Request.
+Please do this before your next lab period.
+
 ## Compile
 
 Be sure to compile with `gcc -Wall`

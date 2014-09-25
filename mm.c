@@ -83,12 +83,24 @@ int main(int argc, char *argv[]) {
     qsort(pt, length, sizeof(int), numcmp);
 
     // Print out numbers
-    fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
+    fprintf(stdout, "%s: Sorted output is: \n", argv[0]);    
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-    fprintf(stdout, "\n%s: FIN.\n", argv[0]);
-    fprintf(stdout, "mean: %d\nmedian:%d\nFYI: the mean will be round down\n",
-		 mean(pt, length),median(pt,length));
+    fprintf(stdout, "\nFYI: all the answers will be round down\n");
+    int rc = fork(); //slice off another process by fork
+    
+    if (rc < 0) {//less than 0,or equal -1
+	fprintf(stderr, "Unable to fork\n");//the error is printing to the err log not the screen
+	exit(1);//exit(1) indicates error occurs
+     } else if (rc == 0) {//this is children
+	fprintf(stdout, "this is the child(pid:%d) and the median is %d\n",(int) getpid(), median(pt, length));
+     } else if (rc > 0) {
+	int wc = wait(NULL); //waiting for the child process to end
+    	fprintf(stdout, "this is the parent(pid:%d) and I was waitting for process %d to end,\nand also my child pid is %d",(int) getpid(),(int) wc,(int) rc);
+	fprintf(stdout, " the mean is %d\n", mean(pt,length));
+    	fprintf(stdout, "%s: FIN.\n", argv[0]);
+	}
+
     return 0;
 }

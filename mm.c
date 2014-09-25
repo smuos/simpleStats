@@ -17,13 +17,13 @@ int numcmp (const void *a, const void *b) {
 //mean()
 double mean(int* array, int size)
 {
-	double ret=0;
-	int ii=0;
+	double ret=0;//result for mean
+	int ii=0;//cnt
 
 	for(ii=0; ii<size; ii++)
 		ret += array[ii];
 	
-	ret = ret/size;
+	ret = ret/size;//calc mean
 
 	return ret;
 }
@@ -31,10 +31,10 @@ double mean(int* array, int size)
 //median()
 int median(int* array, int size)
 {
-	int ret=0;
+	int ret=0;//result for median
 	
 	int halfsize = size/2;
-	ret = array[halfsize];
+	ret = array[halfsize];//calc median
 
 	return ret;
 }

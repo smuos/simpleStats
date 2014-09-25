@@ -13,11 +13,20 @@ int numcmp (const void *a, const void *b) {
 }
 
 double mean(int num[], int length){
-    int x;
+    double x=0;
     for(int i = 0; i < length; i++){
-	x=+num[i];
+	x+=num[i];
     }
-    return x/length;
+    return (x/length);
+}
+
+int median(int num[], int length){
+    int x;
+    if(length%2 == 0)
+	x=num[((length-1)/2)-1] + num[((length-1)/2)+1];
+    else
+	x=num[(length-1)/2];
+    return x;
 }
 
 int main(int argc, char *argv[]) {
@@ -54,7 +63,8 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-    fprintf(stdout, "\n%f: is the mean.\n", mean(pt, length));
+    fprintf(stdout, "\n%3f: is the mean.\n", mean(pt, length));
+    fprintf(stdout, "\n%d: is the median.\n", median(pt, length));
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
     return 0;

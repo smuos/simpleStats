@@ -68,28 +68,31 @@ int main(int argc, char *argv[]) {
     qsort(pt, length, sizeof(int), numcmp);
 
     // Print out numbers
-    fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
+    fprintf(stdout, "%s: Sorted output is: ", argv[0]);
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+
+    // avoid printing out the numbers twice
+    fflush(stdout);
 
     // Forking below
     int rc = fork();
     if (rc < 0)     //fork failed, exit
     {
-        fprintf(stderr, "fork failed'n");
+        fprintf(stderr, "fork failed\n");
         exit(1);
     }
-    else if (rc == 0)   //Child calls and print median
+    else if (rc == 0)   //Child calls function and prints median
     {
-        fprintf(stdout, "The median is: %f \n", median(pt,length));
+        fprintf(stdout, "\n%s: Median is: %f", argv[0], median(pt,length));
     }
     else        //Parent calls and prints mean
     {
         // make parent wait until child is finished
         wait(NULL);
-        fprintf(stdout, "The mean is: %f  \n", mean(pt,length));
+        fprintf(stdout, "\n%s: Mean is: %f  \n",argv[0], mean(pt,length));
+        fprintf(stdout, "%s: FIN. \n", argv[0]);
     }
 
     return 0;

@@ -3,6 +3,14 @@
 
 #define debug 0
 
+float mean(int length, int *pt) {
+    int i, total=0;
+    for(i=0; i<length; i++) {
+        total=total+pt[i];
+    }
+    return ((float)total/length);
+}
+
 // Comparison function for qsort()
 int numcmp (const void *a, const void *b) {
     int x = *((int*) a);
@@ -46,6 +54,7 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
+    fprintf(stdout, "Mean: %.2f\n", mean(length, pt));
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
     return 0;

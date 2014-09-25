@@ -70,8 +70,7 @@ int main(int argc, char *argv[]) {
     for (i = 0; i < length; i++) {
         pt[i] = (int) strtol(argv[i+1], NULL, 10);
     }
-
-    // Sort numbers
+   // Sort numbers
     qsort(pt, length, sizeof(int), numcmp);
 
     // Print out numbers
@@ -79,7 +78,6 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
         //fork()
 	int rc = fork();
@@ -92,18 +90,16 @@ int main(int argc, char *argv[]) {
 	else if(rc == 0)
 	{
 	//child
-        fprintf(stdout, "\n%d ", median(pt, length));
+        fprintf(stdout, "\nThis is the median: %d ", median(pt, length));
 	}
 	
 	else if (rc > 0)
 	{
         //parent
 	int waitCode  = wait(NULL);
-	fprintf(stdout, "\n%d ", mean(pt, length));
+	fprintf(stdout, "\nThis is the mean: %d \n", mean(pt, length));
+	 fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 	}
-
-
-
 
     return 0;
 }

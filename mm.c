@@ -12,9 +12,23 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+// Mean function
+int mean (int pt[] ,int length)
+{
+    int i, avg;
+    int sum = 0;
+    for (i = 0; i <= length; i++)
+    {
+        sum += pt[i];
+    }
+    avg = sum/length;
+    return avg;
+}
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
+    int meancomp;
     
     // Check for proper usage
     if (argc < 2) {
@@ -41,11 +55,15 @@ int main(int argc, char *argv[]) {
     // Sort numbers
     qsort(pt, length, sizeof(int), numcmp);
 
+    // Find the mean of the numbers
+    meancomp =  mean(pt,length);	
+
     // Print out numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
+    fprintf(stdout,"\nThe mean of the numbers are: %d",meancomp);
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
     return 0;

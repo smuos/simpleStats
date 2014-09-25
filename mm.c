@@ -71,6 +71,9 @@ int main(int argc, char *argv[]) {
     for (i = 0; i < length; i++) {
         pt[i] = (int) strtol(argv[i+1], NULL, 10);
     }
+
+    // Sort numbers
+    qsort(pt, length, sizeof(int), numcmp);
     
     // Creating a fork process
     int frk = fork();
@@ -81,20 +84,20 @@ int main(int argc, char *argv[]) {
        exit(0);
     }
 
-    if(frk == 1)
+    if(frk == 1) // child
     {
         // Find the median of the numbers
         mediancomp = median(pt,length);    
-    }
-
-    // Sort numbers
-    qsort(pt, length, sizeof(int), numcmp);
+       fprintf(stdout,"\nThe median of the numbers are: %f",mediancomp);
+     }
     
-    if (frk == 2)
+    if (frk == 2) //parent
     {
-        // Find the mean of the numbers
-        meancomp =  mean(pt,length);	
-    }
+         // Find the mean of the numbers
+         meancomp =  mean(pt,length);	
+         fprintf(stdout,"\nThe mean of the numbers are: %f",meancomp);
+     }
+
     // Print out numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
     for (i=0; i<length; i++) {

@@ -21,7 +21,36 @@ int mean(int* list, int length){
     }
     m = m/length;//the mean is equal to the total amount divided by how many term
 
-    return m;
+    return (int)m;
+}
+
+int median(int* list, int length){
+   //medium is the middle letter in the ordered array of numbers
+   //if the length is even number,the (mean of length/2 and length/2+1)th one is the medium
+   //if the length is odd number, the (length/2)th one is the medium since length is a interger
+   //which means it will always roundup
+
+   int* md;//md is for the even number case
+
+   if(length%2!=0){//means there is a remainder = a odd number
+	return list[length/2];
+   }
+   else{
+    	if ((md = malloc(length * sizeof(int))) == NULL) {
+        	fprintf(stderr, "Could not allocate memory for calculating the medium of even amount of numbers.\n");
+   	 }
+      	md[0]=list[length/2];
+	md[1]=list[length/2-1];
+
+	/*the following part serve testing purposes:	
+	int i;//for testing purposes
+   	for (i=0; i<length; i++) {
+        	fprintf(stdout, "%d ", md[i]);
+    	}
+	*/
+	
+	return mean(md,2);
+   }
 }
 
 int main(int argc, char *argv[]) {
@@ -58,7 +87,8 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
-    fprintf(stdout, "mean: %d (FYI: the mean will be round up)\n", mean(pt, length));
+    fprintf(stdout, "\n%s: FIN.\n", argv[0]);
+    fprintf(stdout, "mean: %d\nmedian:%d\nFYI: the mean will be round down\n",
+		 mean(pt, length),median(pt,length));
     return 0;
 }

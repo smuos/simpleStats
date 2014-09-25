@@ -3,6 +3,19 @@
 
 #define debug 0
 
+//Mean calculating function
+double mean(int *pt, int length)
+{
+    int sum = 0;
+    double mean = 0;
+    for(int i = 0; i < length; i++)
+    {
+        sum = sum + pt[i];
+    }
+    mean = ((double)sum/length);
+    return mean;
+}
+
 // Comparison function for qsort()
 int numcmp (const void *a, const void *b) {
     int x = *((int*) a);
@@ -48,5 +61,7 @@ int main(int argc, char *argv[]) {
     }
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
+    // Call mean function
+    fprintf(stdout, "The mean is: %.2f \n", mean(pt, length));
     return 0;
 }

@@ -28,7 +28,19 @@ int mean( int *theArray, int arrayLength)
 //the median function
 int median(int *theArray, int arrayLength)
 {
-	int middleNum = arraylength / 2;
+	int middleNum;
+	//even
+	if((arrayLength / 2) == 0)
+	{
+
+	middleNum = (arrayLength / 2) - 1;
+
+	}
+	else
+	{
+        middleNum = (((arrayLength + 1) / 2) - 1);
+	}
+
 	return theArray[middleNum];
 }//end median
 
@@ -67,6 +79,27 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "%d ", pt[i]);
     }
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+
+        //fork()
+	int rc = fork();
+	
+	if(rc < 0)
+	{
+	fprintf(stderr, "%s: Error forking.\n", argv[0]);
+        }
+
+	else if(rc == 0)
+	{
+
+	}
+	
+	else if (rc > 0)
+	{
+
+	}
+
+
+
 
     return 0;
 }

@@ -1,3 +1,10 @@
+// mm.c
+
+/*
+A simple C program to calculate the mean and median
+of input numbers.
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -10,6 +17,16 @@ int numcmp (const void *a, const void *b) {
     if (x > y) return 1;
     if (x < y) return -1;
     return 0;
+}
+
+// Function to calculate the mean
+double mean (int *num, int length) {
+    float sum = 0;
+    for (int i=0; i<length; i++)
+    {
+        sum += num[i];
+    }
+    return sum / length;
 }
 
 int main(int argc, char *argv[]) {

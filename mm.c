@@ -23,7 +23,7 @@ int numcmp (const void *a, const void *b) {
 double mean (int *num, int length) {
     double sum = 0;
     int i;
-    for ( i=0; i<length; i++)
+    for (i=0; i<length; i++)
         sum += num[i];
     return sum / length;
 }
@@ -71,6 +71,22 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "%d ", pt[i]);
     }
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+
+    // Forking below
+    int rc = fork();
+    if (rc < 0)     //fork failed, exit
+    {
+        fprintf(stderr, "fork failed'n");
+        exit(1);
+    }
+    else if (rc == 0)   //Child calls and print median
+    {
+        fprintf(stdout, "The median is: %f \n", median(pt,length));
+    }
+    else        //Parent calls and prints mean
+    {
+        fprintf(stdout, "The mean is: %f  \n", mean(pt,length));
+    }
 
     return 0;
 }

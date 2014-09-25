@@ -41,11 +41,13 @@ int median(int* list, int length){
    	 }
       	md[0]=list[length/2];
 	md[1]=list[length/2-1];
-	
+
+	/*the following part serve testing purposes:	
 	int i;//for testing purposes
    	for (i=0; i<length; i++) {
         	fprintf(stdout, "%d ", md[i]);
     	}
+	*/
 	
 	return mean(md,2);
    }

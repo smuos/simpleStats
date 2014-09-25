@@ -1,5 +1,7 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 #define debug 0
 
@@ -15,9 +17,9 @@ int numcmp (const void *a, const void *b) {
 //mean()
 double mean(int* array, int size)
 {
-	double ret=-1;
+	double ret=0;
 	int ii=0;
-	
+
 	for(ii=0; ii<size; ii++)
 		ret += array[ii];
 	
@@ -29,7 +31,7 @@ double mean(int* array, int size)
 //median()
 int median(int* array, int size)
 {
-	int ret=-1;
+	int ret=0;
 	
 	int halfsize = size/2;
 	ret = array[halfsize];
@@ -73,16 +75,36 @@ int main(int argc, char *argv[]) {
     }
 	printf("\n\n");
 	
-	//test for mean()
-	double rtn1 = mean(pt, length);
-	printf("mean: %f\n", rtn1);
-
-	//test for median()
-	int rtn2 = median(pt, length);
-	printf("median: %d\n", rtn2);
-
+	//add fork()
+	printf("Hi stranger! I'm (pid:%d)\n", (int) getpid());
+	printf("\n");
+    int rc = fork(); //slice off another process
 	
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+    //error case
+    if (rc < 0) {
+        // Could not cut another process
+        fprintf(stderr, "OS too hard, could not cut.\n");
+        exit(0);
 
+    //child process
+    } else if (rc == 0) {
+        printf("Hello, I am child (pid:%d)\n", (int) rc);
+
+		//print median()
+		int rtn2 = median(pt, length);
+		printf("median: %d\n", rtn2);
+		printf("\n");
+    
+    //parent process
+    } else if (rc > 0) {
+        wait(NULL); //is child finished?
+        printf("Hello, I am parent (pid:%d)\n", (int) rc);
+		
+		//print mean()
+		double rtn1 = mean(pt, length);
+		printf("mean: %f\n", rtn1);
+	    fprintf(stdout, "\n%s: FIN. \n", argv[0]);	
+    }
+		
     return 0;
 }

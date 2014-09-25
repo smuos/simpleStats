@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define debug 0
 
@@ -13,10 +14,11 @@ int numcmp (const void *a, const void *b) {
 }
 
 // Mean function
-int mean (int pt[] ,int length)
+double mean (int pt[] ,int length)
 {
-    int i, avg;
-    int sum = 0;
+    int i;
+    double avg;
+    double sum = 0;
     for (i = 0; i <= length; i++)
     {
         sum += pt[i];
@@ -26,14 +28,14 @@ int mean (int pt[] ,int length)
 }
 
 // Median function
-int median (int pt[],int length)
+double median (int pt[],int length)
 {
-    int first, second, final;
+    double first, second, final;
     if (length%2 == 0)
     {
        first =  pt[length/2];
        second = pt[(length/2) + 1];
-       final = first + second;
+       final = (first + second)/2;
        return final;
     }
     else
@@ -46,7 +48,7 @@ int median (int pt[],int length)
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
-    int meancomp, mediancomp;
+    double meancomp, mediancomp;
     
     // Check for proper usage
     if (argc < 2) {
@@ -69,23 +71,37 @@ int main(int argc, char *argv[]) {
     for (i = 0; i < length; i++) {
         pt[i] = (int) strtol(argv[i+1], NULL, 10);
     }
+    
+    // Creating a fork process
+    int frk = fork();
+   
+    if (frk < -1)
+    {
+       fprintf(stdout, "Something is wrong");
+       exit(0);
+    }
+
+    if(frk == 1)
+    {
+        // Find the median of the numbers
+        mediancomp = median(pt,length);    
+    }
 
     // Sort numbers
     qsort(pt, length, sizeof(int), numcmp);
-
-    // Find the mean of the numbers
-    meancomp =  mean(pt,length);	
-
-    // Find the median of the numbers
-    mediancomp = median(pt,length);
-
+    
+    if (frk == 2)
+    {
+        // Find the mean of the numbers
+        meancomp =  mean(pt,length);	
+    }
     // Print out numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-    fprintf(stdout,"\nThe mean of the numbers are: %d",meancomp);
-    fprintf(stdout,"\nThe median of the numbers are: %d",mediancomp);
+    fprintf(stdout,"\nThe mean of the numbers are: %f",meancomp);
+    fprintf(stdout,"\nThe median of the numbers are: %f",mediancomp);
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
     return 0;

@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "%d ", pt[i]);
     }
 
-    // avoid printing out the numbers twice
+    // avoid printing out the sorted numbers twice
     fflush(stdout);
 
     // Forking below
@@ -83,11 +83,11 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "fork failed\n");
         exit(1);
     }
-    else if (rc == 0)   //Child calls function and prints median
+    else if (rc == 0)   //Child calls median function and prints to stdout
     {
         fprintf(stdout, "\n%s: Median is: %f", argv[0], median(pt,length));
     }
-    else        //Parent calls and prints mean
+    else        //Parent calls mean function and prints to stdout
     {
         // make parent wait until child is finished
         wait(NULL);

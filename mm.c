@@ -25,10 +25,28 @@ int mean (int pt[] ,int length)
     return avg;
 }
 
+// Median function
+int median (int pt[],int length)
+{
+    int first, second, final;
+    if (length%2 == 0)
+    {
+       first =  pt[length/2];
+       second = pt[(length/2) + 1];
+       final = first + second;
+       return final;
+    }
+    else
+    {
+        final = pt[length/2];
+        return final;
+    }
+}
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
-    int meancomp;
+    int meancomp, mediancomp;
     
     // Check for proper usage
     if (argc < 2) {
@@ -58,12 +76,16 @@ int main(int argc, char *argv[]) {
     // Find the mean of the numbers
     meancomp =  mean(pt,length);	
 
+    // Find the median of the numbers
+    mediancomp = median(pt,length);
+
     // Print out numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
     fprintf(stdout,"\nThe mean of the numbers are: %d",meancomp);
+    fprintf(stdout,"\nThe median of the numbers are: %d",mediancomp);
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
     return 0;

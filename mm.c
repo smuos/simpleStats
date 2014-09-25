@@ -73,12 +73,6 @@ int main(int argc, char *argv[]) {
    // Sort numbers
     qsort(pt, length, sizeof(int), numcmp);
 
-    // Print out numbers
-    fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
-    for (i=0; i<length; i++) {
-        fprintf(stdout, "%d ", pt[i]);
-    }
-
         //fork()
 	int rc = fork();
 	
@@ -90,9 +84,14 @@ int main(int argc, char *argv[]) {
 	else if(rc == 0)
 	{
 	//child
+	 fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
+ 	    for (i=0; i<length; i++)
+            {
+             fprintf(stdout, "%d ", pt[i]);
+            }
         fprintf(stdout, "\nThis is the median: %d ", median(pt, length));
 	}
-	
+ 	
 	else if (rc > 0)
 	{
         //parent

@@ -7,6 +7,8 @@ of input numbers.
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 #define debug 0
 

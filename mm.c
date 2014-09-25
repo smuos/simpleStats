@@ -85,6 +85,8 @@ int main(int argc, char *argv[]) {
     }
     else        //Parent calls and prints mean
     {
+        // make parent wait until child is finished
+        wait(NULL);
         fprintf(stdout, "The mean is: %f  \n", mean(pt,length));
     }
 

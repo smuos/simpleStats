@@ -23,7 +23,7 @@ float mean(int *num, int length) {
 
 float median(int *num, int length){
   if(length%2==0){
-    return (num[length/2]+num[length/2+1])/(float)2;
+    return (num[length/2-1]+num[length/2])/(float)2;
   }else{
     return num[length/2+1];
   }

@@ -12,19 +12,30 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+//Mean functiont that outputs mean of an array
 float mean(int *num, int length) {
+  // Initialization of vars
+  // sum -> sum of ints of array
+  // i -> num used for doing iteation
   float sum = 0;
   int i;
+  // For loop to add every number to sum
   for(i=0; i<length;i++){
     sum += num[i];
   }
+  // Return mean
   return sum/length;
 }
 
+// Median function that outputs median
 float median(int *num, int length){
+  // If the length of array is even
   if(length%2==0){
+    //return the average number between two median numbers
     return (num[length/2-1]+num[length/2])/(float)2;
+  // If the length of array is odd 
   }else{
+    // Return the median
     return num[length/2+1];
   }
 }

@@ -3,6 +3,14 @@
 
 #define debug 0
 
+//Median calculating function
+int median(int *pt, int length)
+{
+    int middle = (length/2);
+    int median = pt[middle];
+    return median;
+}
+
 //Mean calculating function
 double mean(int *pt, int length)
 {
@@ -63,5 +71,8 @@ int main(int argc, char *argv[]) {
 
     // Call mean function
     fprintf(stdout, "The mean is: %.2f \n", mean(pt, length));
+
+    // Call median function
+    fprintf(stdout, "The median is: %d \n", median(pt, length));
     return 0;
 }

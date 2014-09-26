@@ -12,6 +12,15 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+float mean(int *num, int length) {
+  float sum = 0;
+  int i;
+  for(i=0; i<length;i++){
+    sum += num[i];
+  }
+  return sum/length;
+}
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
@@ -46,7 +55,10 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
+
+    fprintf(stdout, "\nMean: %f", mean(pt, length));
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
     return 0;
+   
 }

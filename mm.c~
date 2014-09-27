@@ -3,7 +3,7 @@
 #include <unistd.h>
 
 #define debug 0
-#define FAILED 1
+#define FAILURE 1
 
 // Declare Function
 int numcmp (const void *a, const void *b);
@@ -43,7 +43,7 @@ float median(int *num, int length){
   // If the length of array is odd 
   }else{
   // Return the median
-    return num[length/2+1];
+    return num[length/2];
   }
 }
 
@@ -87,15 +87,20 @@ int main(int argc, char *argv[]) {
 
     // If there is no arugment
     if (rc < 0){
+      // Print filed output and exit with FAILED
       fprintf(stderr, "Fork Failed %s\n", argv[0]);
-      exit(FAILED);
+      exit(FAILURE);
     // If the process is child
     } else if (rc == 0){
+      // Print child'spid and median
       fprintf(stdout, "This is child process(pid:%d)\n", (int)getpid());
       fprintf(stdout, "The median is: %f\n", median(pt, length));
     // If the process is parent
     } else if (rc > 0){
-      fprintf(stdout, "\nThis is parent prcesss(pid:%d)\n", (int)getpid());
+      // Wait for child process
+      int wc = wait(NULL);
+      // Print parent's pid, mean and FIN
+      fprintf(stdout, "\nThis is parent prcesss(pid:%d) Waited for child process %d\n", (int)getpid(), wc);
       fprintf(stdout, "The mean is: %f\n", mean(pt, length));
       fprintf(stdout, "%s: FIN. \n",argv[0]);
     }

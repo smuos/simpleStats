@@ -43,7 +43,7 @@ float median(int *num, int length){
   // If the length of array is odd 
   }else{
   // Return the median
-    return num[length/2+1];
+    return num[length/2];
   }
 }
 
@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
     // If the process is child
     } else if (rc == 0){
       fprintf(stdout, "This is child process(pid:%d)\n", (int)getpid());
-      fprintf(stdout, "The median is: %f", median(pt, length));
+      fprintf(stdout, "The median is: %f\n", median(pt, length));
     // If the process is parent
     } else if (rc > 0){
       fprintf(stdout, "\nThis is parent prcesss(pid:%d)\n", (int)getpid());

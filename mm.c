@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 #define debug 0
 
@@ -60,18 +62,12 @@ int main(int argc, char *argv[]) {
         pt[i] = (int) strtol(argv[i+1], NULL, 10);
     }
 	
-	// find the mean value.
-    int meanvalue; 
-    meanvalue = mean(length,pt);
-    fprintf(stdout, "The mean value is: %d\n",meanvalue);
+	
 
     // Sort numbers
     qsort(pt, length, sizeof(int), numcmp);
 
-	//find the middle value
-	int medianvalue;
-	medianvalue = median(length, pt);
-	fprintf(stdout, "The median value is: %d\n", medianvalue);
+	
 
     // Print out numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
@@ -79,6 +75,29 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "%d ", pt[i]);
     }
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+	
+	//fork
+	int rc = fork(); 
+	if (rc < 0) {
+	fprintf(stdout, "Cannot fork()\n");
+	exit(0);
+	} else if (rc == 0) {
+
+	printf("Hello, I am child (pid:%d)\n", (int) rc);
+	//find the middle value
+	//int medianvalue;
+	//medianvalue = median(length, pt);
+	//fprintf(stdout, "I'm child and the median value is: %d\n", medianvalue);
+
+	} else{
+	int wc = wait(NULL);
+	printf("Waiting the child, I am %d (wc:%d) (pid:%d)\n",
+	getpid(), wc, (int) rc);
+	// find the mean value.
+    //int meanvalue; 
+   // meanvalue = mean(length,pt);
+    //fprintf(stdout, "I'm parents and the mean value is: %d\n",meanvalue);
+	}
 
     return 0;
 }

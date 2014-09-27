@@ -79,12 +79,12 @@ int main(int argc, char *argv[]) {
                 returnCode);
     } else if (returnCode == 0) {
         // Child print median
-        fprintf(stdout, "\n%s:(%d C) Median is: %.3f", argv[0], (int)getpid(),
+        fprintf(stdout, "\n%s:(%d C) Median is: %.2f", argv[0], (int)getpid(),
                 median(pt, length));
     } else if (returnCode > 0) {
         // Parent print mean after child
         int wc = wait(NULL);
-        fprintf(stdout, "\n%s:(%d P, %d WC) Mean is: %.3f", argv[0], 
+        fprintf(stdout, "\n%s:(%d P, %d WC) Mean is: %.2f", argv[0], 
                 (int)getpid(), wc, mean(pt, length));
     }
 

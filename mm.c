@@ -85,9 +85,9 @@ int main(int argc, char *argv[]) {
 
 	printf("Hello, I am child (pid:%d)\n", (int) rc);
 	//find the middle value
-	//int medianvalue;
-	//medianvalue = median(length, pt);
-	//fprintf(stdout, "I'm child and the median value is: %d\n", medianvalue);
+	int medianvalue;
+	medianvalue = median(length, pt);
+	fprintf(stdout, "I'm child and the median value is: %d\n", medianvalue);
 
 	} else{
 	int wc = wait(NULL);

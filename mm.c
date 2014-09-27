@@ -3,6 +3,9 @@
 
 #define debug 0
 
+// Function declaration
+float mean(int length, int pt[]);
+
 // Comparison function for qsort()
 int numcmp (const void *a, const void *b) {
     int x = *((int*) a);
@@ -46,7 +49,19 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
+    fprintf(stdout, "\nThe mean is: %f", mean(length, pt));
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
     return 0;
+}
+
+float mean (int length, int pt[])
+{
+    int i, sum, mean;
+    sum = 0;
+    for (i = 0; i < length; i++) {
+	sum += pt[i];
+    }
+    mean = sum/(float)length;
+    return mean;
 }

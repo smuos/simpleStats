@@ -31,7 +31,5 @@ Be sure to compile with `gcc -Wall`
 ## Usage
 
 ```bash
-$./sort 1 4 9 2 3 1 7 4 8
-./sort: Sorted output is:
-1 1 2 3 4 4 7 8 9
+$ ./mm 1 4 9 2 3 1 7 4 8
 ```

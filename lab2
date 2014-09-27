@@ -1,0 +1,112 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+
+#define debug 0
+#define FAILURE 1
+
+// Declare Function
+int numcmp (const void *a, const void *b);
+float mean(int *element, int length);
+float median(int *element, int length);
+
+// Comparison function for qsort()
+int numcmp (const void *a, const void *b) {
+    int x = *((int*) a);
+    int y = *((int*) b);
+    if (x > y) return 1;
+    if (x < y) return -1;
+    return 0;
+}
+
+//Mean functiont that outputs mean of an array
+float mean(int *element, int size) {
+  
+  float sum = 0, mean;
+  int i;
+  // For loop to add every elementber to sum
+// element++ for pointer to increase to newx one; 
+ for(i=0; i<size;i++,element++){
+    sum += *element;
+  }
+  // cauclate  mean
+  mean= sum/size;
+	return mean;
+  }
+
+// Median function that outputs median
+float median(int *element, int size){
+  // check the size  is even
+  if (size%2==0){
+    //EX:size is 8 the meadin is 4 and 5 position
+    return (element[size/2-1]+element[size/2])/(float)2;
+ 
+  }else{
+ 
+    return element[size/2];
+  }
+}
+
+int main(int argc, char *argv[]) {
+
+    int i, length, *pt;
+    
+    // Check for proper usage
+    if (argc < 2) {
+        fprintf(stderr, "%s: Aborting, not enough arguments.\n", argv[0]);
+        return (-1);
+    }
+
+    // Determine amount of numtbers from argc
+    length = argc - 1;
+#if debug
+    fprintf(stderr, "%s: DEBUG: %d elementbers were passed.\n", argv[0], length);
+#endif
+
+    // Allocate memory for array of elementber (and error check)
+    if ((pt = malloc(length * sizeof(int))) == NULL) {
+        fprintf(stderr, "%s: Could not allocate memory.\n", argv[0]);
+    }
+        
+    // Read elementbers into array
+    for (i = 0; i < length; i++) {
+        pt[i] = (int) strtol(argv[i+1], NULL, 10);
+    }
+
+    // Sort elementbers
+    qsort(pt, length, sizeof(int), numcmp);
+
+    // Print out numbers
+    fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
+    for (i=0; i<length; i++) {
+        fprintf(stdout, "%d ", pt[i]);
+    }
+    
+    // delcare fork to create a new process
+    int rc = fork();
+
+    // If there is no arugment
+    if (rc < 0){
+      // Print filed output and exit with FAILED
+      fprintf(stderr, "Fork Failed %s\n", argv[0]);
+      exit(FAILURE);
+    // If the process is child
+    } else if (rc == 0){
+      //for child 
+      fprintf(stdout, "\nThis is child process(pid:%d)\n", (int)getpid());
+      fprintf(stdout, "The median is: %f\n", median(pt, length));
+    //  process is parent
+    } else if (rc > 0){
+      // Wait()
+      int wc = wait(NULL);
+      
+      fprintf(stdout, "\nThe parent prcesss of PID (pid:%d) Waited for child process %d\n", (int)getpid(), wc);
+      fprintf(stdout, "The mean is: %f\n", mean(pt, length));
+      fprintf(stdout, "%s: FIN. \n",argv[0]);
+    }
+
+
+    return 0;
+ 
+ 
+}

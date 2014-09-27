@@ -1,7 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define debug 0
+#define FAILED 1
+
+// Declare Function
+int numcmp (const void *a, const void *b);
+float mean(int *num, int length);
+float median(int *num, int length);
 
 // Comparison function for qsort()
 int numcmp (const void *a, const void *b) {
@@ -30,12 +37,12 @@ float mean(int *num, int length) {
 // Median function that outputs median
 float median(int *num, int length){
   // If the length of array is even
-  if(length%2==0){
+  if (length%2==0){
     //return the average number between two median numbers
     return (num[length/2-1]+num[length/2])/(float)2;
   // If the length of array is odd 
   }else{
-    // Return the median
+  // Return the median
     return num[length/2+1];
   }
 }
@@ -74,10 +81,24 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
+    
+    // Initilaztion fork() for process
+    int rc = fork();
 
-    fprintf(stdout, "\nMean: %f", mean(pt, length));
-    fprintf(stdout, "\nMedian: %f", median(pt, length));
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+    // If there is no arugment
+    if (rc < 0){
+      fprintf(stderr, "Fork Failed %s\n", argv[0]);
+      exit(FAILED);
+    // If the process is child
+    } else if (rc == 0){
+      fprintf(stdout, "This is child process(pid:%d)\n", (int)getpid());
+      fprintf(stdout, "The median is: %f", median(pt, length));
+    // If the process is parent
+    } else if (rc > 0){
+      fprintf(stdout, "This is parent prcesss(pid:%d)", (int)getpid());
+      fprintf(stdout, "The mean is: %f", mean(pt, length));
+      fprintf(stdout, "\n%s: FIN. \n",argv[0]);
+    }
 
     return 0;
    

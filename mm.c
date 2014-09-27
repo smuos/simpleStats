@@ -47,7 +47,8 @@ int main(int argc, char *argv[]) {
     for (i = 0; i < length; i++) {
         pt[i] = (int) strtol(argv[i+1], NULL, 10);
     }
-
+	
+	// find the mean value.
     int meanvalue; 
     meanvalue = mean(length,pt);
     fprintf(stdout, "The mean value is: %d\n",meanvalue);

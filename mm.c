@@ -91,6 +91,7 @@ int main(int argc, char *argv[]) {
 
 	} else{
 	int wc = wait(NULL);
+	//wait for child
 	printf("Waiting the child, I am %d (wc:%d) (pid:%d)\n",
 	getpid(), wc, (int) rc);
 	// find the mean value.

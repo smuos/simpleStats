@@ -95,9 +95,9 @@ int main(int argc, char *argv[]) {
       fprintf(stdout, "The median is: %f", median(pt, length));
     // If the process is parent
     } else if (rc > 0){
-      fprintf(stdout, "This is parent prcesss(pid:%d)", (int)getpid());
-      fprintf(stdout, "The mean is: %f", mean(pt, length));
-      fprintf(stdout, "\n%s: FIN. \n",argv[0]);
+      fprintf(stdout, "\nThis is parent prcesss(pid:%d)\n", (int)getpid());
+      fprintf(stdout, "The mean is: %f\n", mean(pt, length));
+      fprintf(stdout, "%s: FIN. \n",argv[0]);
     }
 
     return 0;

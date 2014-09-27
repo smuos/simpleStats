@@ -63,10 +63,8 @@ int main(int argc, char *argv[]) {
 	fprintf(stdout, "\nThe median is: %f", median(length, pt));;
     // The parent process
     } else {
-	mean(length, pt);
+	fprintf(stdout, "\nThe mean is: %f", mean(length, pt));
     }
-    
-    fprintf(stdout, "\nThe mean is: %f", mean(length, pt));
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
     return 0;

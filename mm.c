@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 #define debug 0
 
@@ -46,11 +47,9 @@ int main(int argc, char *argv[]) {
     // Sort numbers
     qsort(pt, length, sizeof(int), numcmp);
 
-    // Print out numbers
+    // Print out numbers message
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
-    for (i=0; i<length; i++) {
-        fprintf(stdout, "%d ", pt[i]);
-    }
+
     // Fork the process
     int rc = fork();
     
@@ -60,12 +59,19 @@ int main(int argc, char *argv[]) {
  	exit(1);
     // The child process
     } else if (rc == 0) {
+	// print out numbers
+	for (i = 0; i < length; i++) {
+	   fprintf(stdout, "%d ", pt[i]);
+	}
+	//print out the median
 	fprintf(stdout, "\nThe median is: %f", median(length, pt));;
     // The parent process
     } else {
+	wait(NULL);
+	//print out the mean
 	fprintf(stdout, "\nThe mean is: %f", mean(length, pt));
+	fprintf(stdout, "\n%s: FIN. \n", argv[0]);
     }
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
     return 0;
 }

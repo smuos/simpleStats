@@ -94,9 +94,9 @@ int main(int argc, char *argv[]) {
 	printf("Waiting the child, I am %d (wc:%d) (pid:%d)\n",
 	getpid(), wc, (int) rc);
 	// find the mean value.
-    //int meanvalue; 
-   // meanvalue = mean(length,pt);
-    //fprintf(stdout, "I'm parents and the mean value is: %d\n",meanvalue);
+    int meanvalue; 
+    meanvalue = mean(length,pt);
+    fprintf(stdout, "I'm parents and the mean value is: %d\n",meanvalue);
 	}
 
     return 0;

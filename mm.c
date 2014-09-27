@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define debug 0
 
@@ -50,6 +51,21 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
+    // Fork the process
+    int rc = fork();
+    
+    // Fork failed
+    if (rc < 0) {
+    	fprintf(stderr, "Fork failed!\n");
+ 	exit(1);
+    // The child process
+    } else if (rc == 0) {
+	median(length, pt);
+    // The parent process
+    } else {
+	mean(length, pt);
+    }
+    
     fprintf(stdout, "\nThe mean is: %f", mean(length, pt));
     fprintf(stdout, "\nThe median is: %f", median(length, pt));
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);

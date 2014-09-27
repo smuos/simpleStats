@@ -77,11 +77,8 @@ int main(int argc, char *argv[]) {
     // Sort numbers
     qsort(pt, length, sizeof(int), numcmp);
 
-    // Print out numbers
+    // Print out message
     fprintf(stdout, "%s: Sorted output is: \n%s: ", argv[0], argv[0]);
-    for (i=0; i<length; i++) {
-        fprintf(stdout, "%d ", pt[i]);
-    }
     
     // Initilaztion fork() for process
     int rc = fork();
@@ -93,7 +90,11 @@ int main(int argc, char *argv[]) {
       exit(FAILURE);
     // If the process is child
     } else if (rc == 0){
-      // Print child'spid and median
+      //print out sorted number
+      for (i=0; i<length; i++) {
+	fprintf(stdout, "%d ", pt[i]);
+      }
+      // Print child's pid and median
       fprintf(stdout, "\n%s: This is child process(pid:%d)\n", argv[0], (int)getpid());
       fprintf(stdout, "%s: The median is: %f\n", argv[0], median(pt, length));
     // If the process is parent

@@ -5,6 +5,7 @@
 
 // Function declaration
 float mean(int length, int pt[]);
+float median(int length, int pt[]);
 
 // Comparison function for qsort()
 int numcmp (const void *a, const void *b) {
@@ -50,18 +51,30 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "%d ", pt[i]);
     }
     fprintf(stdout, "\nThe mean is: %f", mean(length, pt));
+    fprintf(stdout, "\nThe median is: %f", median(length, pt));
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
     return 0;
 }
 
-float mean (int length, int pt[])
+float mean(int length, int pt[])
 {
-    int i, sum, mean;
+    int i, sum;
+    float mean;
     sum = 0;
     for (i = 0; i < length; i++) {
 	sum += pt[i];
     }
     mean = sum/(float)length;
     return mean;
+}
+
+float median(int length, int pt[])
+{
+    float median;
+    if (length % 2 == 0)
+        median = (float)(pt[length/2 - 1] + pt[length/2])/2;
+    else
+	median = pt[length/2];
+    return median;
 }

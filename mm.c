@@ -12,6 +12,7 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+// mean value
 int mean(int length, int *pt){
     int i;
     double value = 0;
@@ -20,6 +21,17 @@ int mean(int length, int *pt){
     }
     value = value/length;
     return value;
+}
+
+// median value
+int median(int length, int *pt){
+	int middle;
+	if(length % 2 != 0){
+		middle = (pt[length/2] +pt[(length/2)+1]) / 2;
+	}else{
+		middle = pt[length/2];
+	}
+	return middle;
 }
 
 int main(int argc, char *argv[]) {
@@ -55,6 +67,11 @@ int main(int argc, char *argv[]) {
 
     // Sort numbers
     qsort(pt, length, sizeof(int), numcmp);
+
+	//find the middle value
+	int medianvalue;
+	medianvalue = median(length, pt);
+	fprintf(stdout, "The median value is: %d\n", medianvalue);
 
     // Print out numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);

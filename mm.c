@@ -13,16 +13,35 @@ int numcmp (const void *a, const void *b) {
 }
 
 //function to calculate the mean
-int mean (int *p, int length)
+double  mean (int *p, int length)
 {
-    int i, total;
-    for (i = 0, i < length(), i++)
+    int i;
+    double total = 0;
+    for (i = 0; i < length; i++)
     {
         total = total + p[i];
     }
     return total/length;
 }
-  
+
+//function to find median  
+double  median (int *p, int length)
+{
+    int i,  position;
+    double medianValue;
+    if (length%2 == 0)
+    {
+        position = length/2;
+	medianValue = (p[position-1] + p[position])/2;
+    }
+    else
+    {
+	position = length/2;
+	medianValue = p[position];
+    }
+    return medianValue;
+}
+	
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
@@ -59,6 +78,5 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "%d ", pt[i]);
     }
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
-
     return 0;
 }

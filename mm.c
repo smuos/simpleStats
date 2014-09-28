@@ -12,6 +12,17 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+//function to calculate the mean
+int mean (int *p, int length)
+{
+    int i, total;
+    for (i = 0, i < length(), i++)
+    {
+        total = total + p[i];
+    }
+    return total/length;
+}
+  
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;

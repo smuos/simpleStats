@@ -42,6 +42,7 @@ int main(int argc, char *argv[]) {
     // Allocate memory for array of number (and error check)
     if ((pt = malloc(length * sizeof(int))) == NULL) {
         fprintf(stderr, "%s: Could not allocate memory.\n", argv[0]);
+	exit(1);
     }
         
     // Read numbers into array

@@ -45,6 +45,13 @@ double  median (int *p, int length)
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
+    double medianValue, meanValue;    
+    //calling fork, and checking if failed    
+    int rc = fork(); 
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+    }
     
     // Check for proper usage
     if (argc < 2) {
@@ -63,7 +70,15 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "%s: Could not allocate memory.\n", argv[0]);
 	exit(1);
     }
-        
+ 
+    if (rc == 0) //if child
+    {
+         medianValue = median(pt, length);
+    }
+    if (rc > 0)  //if parent
+    {
+        meanValue = mean(pt, length);
+    }
     // Read numbers into array
     for (i = 0; i < length; i++) {
         pt[i] = (int) strtol(argv[i+1], NULL, 10);

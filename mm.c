@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
     if (rc == 0) //if child
     {
          medianValue = median(pt, length);
-        // fprintf(stdout, "The median is: %.2f\n", medianValue);
+         fprintf(stdout, "The median is: %.2f\n", medianValue);
     }
 
     if (rc > 0)  //if parent

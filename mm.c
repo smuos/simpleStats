@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 #define debug 0
 
@@ -20,10 +22,10 @@ double mean(int num[], int length){
     return (x/length);
 }
 
-int median(int num[], int length){
-    int x;
+double median(int num[], int length){
+    double x;
     if(length%2 == 0)
-	x=num[((length-1)/2)-1] + num[((length-1)/2)+1];
+	x=(num[((length-1)/2)-1] + num[((length-1)/2)+1])/2;
     else
 	x=num[(length-1)/2];
     return x;
@@ -32,13 +34,12 @@ int median(int num[], int length){
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
-    
+    int status = 0;
     // Check for proper usage
     if (argc < 2) {
         fprintf(stderr, "%s: Aborting, not enough arguments.\n", argv[0]);
         return (-1);
     }
-    int rc = fork();
     // Determine amount of numbers from argc
     length = argc - 1;
 #if debug
@@ -63,8 +64,19 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-    fprintf(stdout, "\n%3f: is the mean.\n", mean(pt, length));
-    fprintf(stdout, "\n%d: is the median.\n", median(pt, length));
+
+    int rc = fork();
+    if(rc == 0){/*This is child process*/
+        fprintf(stdout, "\n%.2f: is the median.\n", median(pt, length));
+	return 0;    
+    }
+    else if(rc > 0){
+	int wc = wait(&status);
+	if(wc > 0)
+	{
+            fprintf(stdout, "\n%.2f: is the mean.\n", mean(pt, length));
+    	}
+    }
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
     return 0;

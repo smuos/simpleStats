@@ -29,6 +29,24 @@ double mean(int* num, int size) {
     return mean;	
 }
 
+// Find median
+int median(int* num, int size) {
+    // Declare variable
+    int middle;
+    double median;
+    middle = size / 2.0;
+    // If there are even numbers of an array
+    if (size % 2) {
+    	median = (num[middle]+num[middle+1])/2.0;
+    }
+    // If array is odd
+    else {
+    	median = num[middle];
+    }
+    return median;
+}
+
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;

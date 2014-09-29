@@ -12,9 +12,40 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+//function to calculate the mean
+double  mean (int *p, int length)
+{
+    int i;
+    double total = 0;
+    for (i = 0; i < length; i++)
+    {
+        total = total + p[i];
+    }
+    return total/length;
+}
+
+//function to find median  
+double  median (int *p, int length)
+{
+    int position;
+    double medianValue;
+    if (length%2 == 0)
+    {
+        position = length/2;
+	medianValue = (double) (p[position-1] + p[position])/2;
+    }
+    else
+    {
+	position = length/2;
+	medianValue = p[position];
+    }
+    return medianValue;
+}
+	
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
+    double medianValue, meanValue;    
     
     // Check for proper usage
     if (argc < 2) {
@@ -31,8 +62,9 @@ int main(int argc, char *argv[]) {
     // Allocate memory for array of number (and error check)
     if ((pt = malloc(length * sizeof(int))) == NULL) {
         fprintf(stderr, "%s: Could not allocate memory.\n", argv[0]);
+	exit(1);
     }
-        
+ 
     // Read numbers into array
     for (i = 0; i < length; i++) {
         pt[i] = (int) strtol(argv[i+1], NULL, 10);
@@ -46,7 +78,27 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+    
+    //caling fork() and checking if call failed
+    int rc = fork(); 
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+    }
 
+    if (rc == 0) //if child
+    {
+         medianValue = median(pt, length);
+         fprintf(stdout, "\nThe median is: %.2f\n", medianValue);
+    }
+
+    if (rc > 0)  //if parent
+    {
+	wait(NULL);
+        meanValue = mean(pt, length);
+        fprintf(stdout, "\nThe mean is: %.2f\n", meanValue);
+    }
+
+    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
     return 0;
 }

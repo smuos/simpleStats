@@ -89,14 +89,14 @@ int main(int argc, char *argv[]) {
     if (rc == 0) //if child
     {
          medianValue = median(pt, length);
-         fprintf(stdout, "The median is: %.2f\n", medianValue);
+         fprintf(stdout, "\nThe median is: %.2f\n", medianValue);
     }
 
     if (rc > 0)  //if parent
     {
 	int wc = wait(NULL);
         meanValue = mean(pt, length);
-        fprintf(stdout, "The mean is: %.2f\n", meanValue);
+        fprintf(stdout, "\nThe mean is: %.2f\n", meanValue);
     }
 
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);

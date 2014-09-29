@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "%s: Aborting, not enough arguments.\n", argv[0]);
         return (-1);
     }
-
+    int rc = fork();
     // Determine amount of numbers from argc
     length = argc - 1;
 #if debug

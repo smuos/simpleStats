@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <unistd.h>
 #define debug 0
 
 // Comparison function for qsort()
@@ -58,10 +58,31 @@ int main(int argc, char *argv[]) {
     for (i = 0; i < length; i++) {
         pt[i] = (int) strtol(argv[i+1], NULL, 10);
     }
+    qsort(pt, length, sizeof(int), numcmp);
 
-    int value = mean(length, pt);
-    fprintf(stdout, "\nThe mean of the numbers is %d.\nThis completes the task #2 of the assignment.\n", value );
-    int medianValue = median(length, pt);
-    fprintf(stdout, "\nThe median of the numbers is %d.\nThis completes the task #3 of the assignment.\n", medianValue); 
+    // Print out numbers
+    fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
+    for (i=0; i<length; i++) {
+        fprintf(stdout, "%d ", pt[i]);
+    }
+    printf("\n");
+    int rc = fork();	//calling the fork method
+    if(rc < 0) // fork failed
+    {
+	fprintf(stderr, "fork failed!\n");
+	exit(1);
+    }
+    else if(rc == 0)	//child call median()
+    {
+	int medianValue = median(length, pt);
+	//Child printing the results of median.
+    	fprintf(stdout, "\nThe median of the numbers is %d.\nThis completes the task #3 of the Assignment.\n", medianValue);
+    }
+    else
+    {			//Parent calling mean()
+    	int value = mean(length, pt);
+	//Parent printing the results of mean.
+    	fprintf(stdout, "\nThe mean of the numbers is %d.\nThis completes the task #2 of the Assignment.\n", value );
+    }
     return 0;
 }

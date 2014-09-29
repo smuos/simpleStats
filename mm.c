@@ -27,7 +27,7 @@ double  mean (int *p, int length)
 //function to find median  
 double  median (int *p, int length)
 {
-    int i,  position;
+    int position;
     double medianValue;
     if (length%2 == 0)
     {
@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
 
     if (rc > 0)  //if parent
     {
-	int wc = wait(NULL);
+	wait(NULL);
         meanValue = mean(pt, length);
         fprintf(stdout, "\nThe mean is: %.2f\n", meanValue);
     }

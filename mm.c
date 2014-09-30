@@ -95,8 +95,9 @@ int main(int argc, char *argv[]) {
     else if (rc == 1) {
     	printf("Hello, I am child, I should print the median");
     	int child = median(pt, length);
+    	fprintf(stdout, "Median is: %d\n", child);
     }
-    else if (rc == 2) {
+    else if (rc == 2){
 	printf("Hello, I am parent, I should print the mean");
     	int parent = mean(pt, length);
     }

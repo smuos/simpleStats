@@ -100,6 +100,7 @@ int main(int argc, char *argv[]) {
     else if (rc == 2){
 	printf("Hello, I am parent, I should print the mean");
     	int parent = mean(pt, length);
+    	fprintf(stdout, "Mean is: %d\n", parent);
     }
 
 }

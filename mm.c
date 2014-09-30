@@ -82,11 +82,14 @@ int main(int argc, char *argv[]) {
         // Child call median()
         double child = median(pt, length);
         // Child process should print the results of median()
-        fprintf(stdout, "This is child processing (pid:%d)\n ", (int)getpid());
+        fprintf(stdout, "This is child processing (pid:%d)\n", (int)getpid());
         fprintf(stdout, "The median value is %d\n", child);
     } else if (rc == 1) {
         // Parent call mean()
         double parent = mean(pt, length);
+        // Parent process should print the results of mean()
+        fprintf(stdout,"This is parent processing (pid:%d)\n", (int)getpid());
+        fprintf(stdout, "The mean value is %d\n", parent);
     }
     
     return 0;

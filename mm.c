@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define debug 0
 
@@ -75,14 +76,25 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "%d ", pt[i]);
     }
 
+
+    /* Forking!!! :O */
+
+    int rc = fork();
+    if (rc < 0) {       
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) { 
+        medianVal = median(pt, length);
+        fprintf(stdout, "Median: %d\n", medianVal);
+    } else {
+        meanVal = mean(pt, length);
+        fprintf(stdout, "Mean: %d\n", meanVal);
+    } 
+
+    /* That's all, folks */
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
-    /* call methods */
-    meanVal = mean(pt, length); 
-    medianVal = median(pt, length);
-    fprintf(stdout, "mean value: %d \n", meanVal);
-    fprintf(stdout, "median value: %d \n", medianVal);
-
+    
     return 0;
 }
 

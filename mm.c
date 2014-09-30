@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define debug 0
 
@@ -51,7 +52,7 @@ int main(int argc, char *argv[]) {
 
     int i, length, *pt;
     
-    // Check for proper usage
+    // Check for prioper usage
     if (argc < 2) {
         fprintf(stderr, "%s: Aborting, not enough arguments.\n", argv[0]);
         return (-1);
@@ -83,6 +84,21 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "%d ", pt[i]);
     }
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
-
     return 0;
+    // Add fork
+    int rc = fork();
+    // Fork problem
+    if (rc < -1) {
+   	fprintf(stdout,"Can't fork!\n");
+    	exit(0);
+    }
+    else if (rc == 1) {
+    	printf("Hello, I am child, I should print the median");
+    	int child = median(pt, length);
+    }
+    else if (rc == 2) {
+	printf("Hello, I am parent, I should print the mean");
+    	int parent = mean(pt, length);
+    }
+
 }

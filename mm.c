@@ -31,6 +31,20 @@ double mean (int *num, int len){
   return mean;
 }
 
+//Issues #3 Add a function, median(),to mm.c calculate the median
+double median(int *num, int len){
+  
+  double median;
+  //If the array length is an even number
+  if(len%2==0){
+    median = (num[len/2]+num[len/2+1])/2.0;
+  }
+  //Otherwise the array length is a odd number
+  else{
+    median = num[(len+1)/2];
+  }
+  return median;
+}
 
 int main(int argc, char *argv[]) {
 

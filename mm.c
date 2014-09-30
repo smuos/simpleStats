@@ -11,6 +11,19 @@ float mean(int length, int *pt) {
     return ((float)total/length);
 }
 
+float median(int length, int *pt) {
+    if(length%2==1) return pt[length/2];
+    else {
+        int *pt2;
+        if((pt2 = malloc(2*sizeof(int)))==NULL) {
+            fprintf(stderr, "Could not allocate memory.\n");
+        }
+        pt2[0] = pt[length/2-1];
+        pt2[1] = pt[length/2];
+        return mean(2, pt2);
+    }
+}
+
 // Comparison function for qsort()
 int numcmp (const void *a, const void *b) {
     int x = *((int*) a);
@@ -54,7 +67,8 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-    fprintf(stdout, "Mean: %.2f\n", mean(length, pt));
+    fprintf(stdout, "\nMean: %.2f\n", mean(length, pt));
+    fprintf(stdout, "Median: %.2f\n", median(length, pt));
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
     return 0;

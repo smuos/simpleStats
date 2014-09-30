@@ -67,9 +67,19 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-    fprintf(stdout, "\nMean: %.2f\n", mean(length, pt));
-    fprintf(stdout, "Median: %.2f\n", median(length, pt));
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+    int rc = fork();
+    if (rc == -1) {
+        fprintf(stdout, "Could not create another process.\n");
+        exit(0);
+    }
+    else if (rc == 0) {
+    fprintf(stdout, "\nMedian: %.2f", median(length, pt));
+    }
+    else if (rc > 0) {
+        int wc = wait(NULL); //is child finished?
+        fprintf(stdout, "\nMean: %.2f", mean(length, pt));
+    }
+    fprintf(stdout, "\n%s: FIN. (pid:%d)\n", argv[0], getpid());
 
     return 0;
 }

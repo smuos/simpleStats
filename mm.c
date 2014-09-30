@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define debug 0
 
@@ -70,6 +71,20 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "%d ", pt[i]);
     }
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
-
+    
+    // Make fork(), have the parent call mean() and child call median()
+    int rc = fork();
+    
+    if (rc < 0) {
+        fprintf(stderr, "Fork Failed!\n");
+        exit(0);
+    } else if (rc == 0) {
+        // Child call median()
+        double child = median(pt, length);
+    } else if (rc == 1) {
+        // Parent call mean()
+        double parnt = mean(pt, length)
+    }
+    
     return 0;
 }

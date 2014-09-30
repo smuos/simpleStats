@@ -23,6 +23,18 @@ double mean(int *num, int length) {
     return sum/length;
 }
 
+// Median() function to calculate the median
+double median(int *num, int length) {
+    // If the array length is even
+    if (length%2 == 0)
+        // Return the average of the two median numbers
+        return (num[length/2] + num[length/2+1]) / 2.0;
+    // If the array length is odd
+    else
+        // Return the median
+        return num[length/2];
+}
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;

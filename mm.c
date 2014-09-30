@@ -11,6 +11,18 @@ int numcmp (const void *a, const void *b) {
     if (x < y) return -1;
     return 0;
 }
+//Issues#2: Add a function, mean(),to mm.c to calculate the mean
+double mean (int *num, int len){
+  double sum = 0, mean = 0;
+  //using a for loop to add up all the values in input numbers
+  for(int i = 0; i<len ;i++){
+    sum = sum + num[i];
+  }
+  //Find the mean 
+  mean = sum / len;
+  return mean;
+}
+
 
 int main(int argc, char *argv[]) {
 

@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define debug 0
 
@@ -21,7 +22,6 @@ double mean (int *num, int len){
   int i;
 
   for( i = 0; i<len ;i++){
-
     sum = sum + num[i];
   }
 
@@ -66,7 +66,29 @@ int main(int argc, char *argv[]) {
     if ((pt = malloc(length * sizeof(int))) == NULL) {
         fprintf(stderr, "%s: Could not allocate memory.\n", argv[0]);
     }
-        
+    
+    //Issues #4 make mm.c fork(),have the parent call mean() and child call median()
+    int rc = fork();
+    //Check the rc value, if it return -1 means fork function fail
+    if(rc == -1){
+      fprintf(stderr,"Fork failed! No child!\n");
+    }else if (rc == 0){
+      //if rc equal to 0 which means fork succeed,the child is processing
+      //let child process print the result of median()
+      //Issues#5 Child process should print the results of median()
+      fprintf(stdout, "This is child processing!\n ");
+      fprintf(stdout, "The median value is %lf.\n",median(pt,length));
+    }else if (rc ==1){
+      //if rc equal to 1 means fork succeed, the parent is processing
+      //let parent process print the result of mean()
+      //Issues#6 Parent process should print the results of mean()
+      fprintf(stdout,"This is parent processing!\n");
+      fprintf(stdout, "The mean value is %lf.\n",mean(pt,length));
+    }
+
+
+
+    
     // Read numbers into array
     for (i = 0; i < length; i++) {
         pt[i] = (int) strtol(argv[i+1], NULL, 10);

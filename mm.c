@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/wait.h>
+
 #define debug 0
 
 // Comparison function for qsort()
@@ -77,12 +79,16 @@ int main(int argc, char *argv[]) {
 	int medianValue = median(length, pt);
 	//Child printing the results of median.
     	fprintf(stdout, "\nThe median of the numbers is %d.\nThis completes the task #3 of the Assignment.\n", medianValue);
+	fprintf(stdout, "\nThe child has finished now. Process id: %d\n\n", (int) getpid());
     }
     else
     {			//Parent calling mean()
+	int wc = wait(NULL);
     	int value = mean(length, pt);
 	//Parent printing the results of mean.
+	fprintf(stdout, "Process id %d, (wc:%d)", (int) getpid(), wc);
     	fprintf(stdout, "\nThe mean of the numbers is %d.\nThis completes the task #2 of the Assignment.\n", value );
+	
     }
     return 0;
 }

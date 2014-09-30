@@ -11,6 +11,7 @@ int numcmp (const void *a, const void *b) {
     if (x < y) return -1;
     return 0;
 }
+
 //Issues#2: Add a function, mean(),to mm.c to calculate the mean
 double mean (int *num, int len){
 
@@ -25,7 +26,6 @@ double mean (int *num, int len){
   }
 
   //Find the mean
- 
   mean = sum / len;
 
   return mean;

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 #define debug 0
 
@@ -29,7 +30,7 @@ double median(int *num, int length) {
     // If the array length is even
     if (length%2 == 0)
         // Return the average of the two median numbers
-        return (num[length/2] + num[length/2+1]) / 2.0;
+        return (num[length/2-1] + num[length/2]) / 2.0;
     // If the array length is odd
     else
         // Return the median
@@ -83,13 +84,16 @@ int main(int argc, char *argv[]) {
         double child = median(pt, length);
         // Child process should print the results of median()
         fprintf(stdout, "This is child processing (pid:%d)\n", (int)getpid());
-        fprintf(stdout, "The median value is %d\n", child);
-    } else if (rc == 1) {
+        fprintf(stdout, "The median value is %f\n", child);
+    } else if (rc > 0) {
         // Parent call mean()
         double parent = mean(pt, length);
+        // Wait for child process
+        int wc = wait(NULL);
+        printf("Waiting for child process (wc:%d)\n", wc);
         // Parent process should print the results of mean()
-        fprintf(stdout,"This is parent processing (pid:%d)\n", (int)getpid());
-        fprintf(stdout, "The mean value is %d\n", parent);
+        fprintf(stdout, "This is parent processing (pid:%d)\n", (int)getpid());
+        fprintf(stdout, "The mean value is %f\n", parent);
     }
     
     return 0;

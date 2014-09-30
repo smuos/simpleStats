@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 #define debug 0
 
@@ -80,6 +81,9 @@ int main(int argc, char *argv[]) {
       fprintf(stdout, "The median value is %lf.\n",median(pt,length));
     }else if (rc ==1){
       //if rc equal to 1 means fork succeed, the parent is processing
+      //Issues #7 Make the parent wait until child has finished before pring the results of mean()
+      int wc = wait(NULL);
+      printf("I am waiting for my child. wc(:%d)\n",wc);
       //let parent process print the result of mean()
       //Issues#6 Parent process should print the results of mean()
       fprintf(stdout,"This is parent processing!\n");

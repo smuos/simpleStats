@@ -39,7 +39,7 @@ int median(int* num, int size) {
     middle = size / 2.0;
     // If there are even numbers of an array
     if (size % 2) {
-    	median = (num[middle]+num[middle+1])/2.0;
+    	median = (num[middle]+num[middle+1])/2;
     }
     // If array is odd
     else {
@@ -83,8 +83,8 @@ int main(int argc, char *argv[]) {
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
+	
     }   
- 
     
     // Add fork
     int rc = fork();
@@ -93,21 +93,20 @@ int main(int argc, char *argv[]) {
    	fprintf(stderr,"Can't fork!\n");
     }
     // The child should print the median
-    else if (rc == 1) {
-    	fprintf(stdout, "Hello, I am child, I should print the median");
+    else if (rc == 0) {
+    	fprintf(stdout, "\nHello, I am child, I should print the median");
     	int child = median(pt, length);
     	// Print the median
-	fprintf(stdout, "Median is: %d\n", child);
+	fprintf(stdout, "\nMedian is: %d\n", child);
     }
     // The parent should print the mean
-    else if (rc == 2){
+    else if (rc > 0){
 	wait(NULL);
-	fprintf(stdout, "Hello, I am parent, I should print the mean");
+	fprintf(stdout, "\nHello, I am parent, I should print the mean");
     	int parent = mean(pt, length);
         // Print the mean
-    	fprintf(stdout, "Mean is: %d\n", parent);
+    	fprintf(stdout, "\nMean is: %d\n", parent);
     }
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
-    
+        
     return 0;
 }

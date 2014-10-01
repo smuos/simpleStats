@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
 
     if (rc < 0) {
         fprintf(stderr,"%s aborting: Could not fork\n", argv[0]);
-        return SUCCESS;
+        return FAILURE;
     }
 
     if (rc == 0) {

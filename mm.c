@@ -83,6 +83,7 @@ int main(int argc, char *argv[]) {
 
     if (rc == 0) {
         // Child code.
+        fprintf(stdout, "Median = %f\n", median(argc,pt));
     }
 
     if  (rc > 0) {
@@ -90,8 +91,5 @@ int main(int argc, char *argv[]) {
     }
     // Calculate mean
     fprintf(stdout, "\nMean = %f\n", mean(argc,argv));
-
-    // Calculate median
-    fprintf(stdout, "Median = %f\n", median(argc,pt));
     return 0;
 }

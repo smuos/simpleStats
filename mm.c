@@ -24,6 +24,18 @@ double  mean(int n, char *list[]) {
     return (double) sum / (double)(n-1);
 }
 
+// median()
+//    int n, number of elements in list.
+//    int *list pointer to first element of a SORTED list.
+double median(int n , int *list) {
+    if ((n-1) % 2 != 0) {
+        return (double) list[(n-1)/2];
+    }
+    else {
+        return ((double) list[((n-1)/2)-1] + (double) list[((n-1)/2)]) / 2.0;
+    }
+}
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
@@ -63,5 +75,7 @@ int main(int argc, char *argv[]) {
     // Calculate mean
     fprintf(stdout, "\nMean = %f\n", mean(argc,argv));
 
+    // Calculate median
+    fprintf(stdout, "Median = %f\n", median(argc,pt));
     return 0;
 }

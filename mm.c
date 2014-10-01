@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
 		exit(1);
 	} else if (rc == 0) { // child
 		median(length, pt);
-       // fprintf(stdout, "Median: %d", median(length, pt));
+        fprintf(stdout, "Median: %d", median(length, pt));
     } else {             // parent
 		int wc = wait(NULL);
         //printf("hello, I am parent of %d (wc:%d) (pid:%d)\n",

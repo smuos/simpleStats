@@ -76,8 +76,6 @@ int main(int argc, char *argv[]) {
 	printf("\n\n");
 	
 	//add fork()
-	printf("Hi stranger! I'm (pid:%d)\n", (int) getpid());
-	printf("\n");
     int rc = fork(); //slice off another process
 	
     //error case
@@ -88,22 +86,19 @@ int main(int argc, char *argv[]) {
 
     //child process
     } else if (rc == 0) {
-        printf("Hello, I am child (pid:%d)\n", (int) rc);
-
 		//print median()
 		int rtn2 = median(pt, length);
 		printf("median: %d\n", rtn2);
-		printf("\n");
     
     //parent process
     } else if (rc > 0) {
         wait(NULL); //is child finished?
-        printf("Hello, I am parent (pid:%d)\n", (int) rc);
 		
 		//print mean()
 		double rtn1 = mean(pt, length);
 		printf("mean: %f\n", rtn1);
-	    fprintf(stdout, "\n%s: FIN. \n", argv[0]);	
+	    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+		free(pt);//free memory
     }
 		
     return 0;

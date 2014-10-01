@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
         //printf("hello, I am parent of %d (wc:%d) (pid:%d)\n",
           //      (int) rc, wc, getpid());
         mean(length, pt);
-       // fprintf(stdout, "Mean: %d", mean(length, pt)); 
+       fprintf(stdout, "Mean: %d", mean(length, pt)); 
 	}
     // Print out numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);

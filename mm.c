@@ -1,9 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
 #define debug 0
 
-// Comparison function for qsort()
+// Comparison function for qt[]);
 int numcmp (const void *a, const void *b) {
     int x = *((int*) a);
     int y = *((int*) b);
@@ -12,15 +13,30 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+// mean() function to calculate
+double mean (int length, int *pt)
+{
+    int i, sum;
+    double mean;
+    sum = 0;
+    for (i=0; i<length; i++)
+    {
+        sum += pt[i];
+    }   
+    mean = sum /(double)length;
+    return mean;
+}
+
 int main(int argc, char *argv[]) {
-	
+     
     int i, length, *pt;
-    
+     
     // Check for proper usage
     if (argc < 2) {
         fprintf(stderr, "%s: Aborting, not enough arguments.\n", argv[0]);
-        return (-1);
+        //return (-1);
     }
+ 
 
     // Determine amount of numbers from argc
     length = argc - 1;
@@ -28,25 +44,22 @@ int main(int argc, char *argv[]) {
     fprintf(stderr, "%s: DEBUG: %d numbers were passed.\n", argv[0], length);
 #endif
 
+
     // Allocate memory for array of number (and error check)
     if ((pt = malloc(length * sizeof(int))) == NULL) {
         fprintf(stderr, "%s: Could not allocate memory.\n", argv[0]);
     }
-        
     // Read numbers into array
     for (i = 0; i < length; i++) {
         pt[i] = (int) strtol(argv[i+1], NULL, 10);
     }
-
+ 
     // Sort numbers
     qsort(pt, length, sizeof(int), numcmp);
-	
-	//Mean
-    mean(i/length);
-    
-    //Median
-    median();
-	
+     
+    //Mean
+    fprintf(stdout, "Mean: %d", mean(length, pt));  
+     
     // Print out numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
     for (i=0; i<length; i++) {

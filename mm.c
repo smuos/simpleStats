@@ -1,7 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define debug 0
+#define SUCCESS 0
+#define FAILURE -1
 
 // Comparison function for qsort()
 int numcmp (const void *a, const void *b) {
@@ -26,7 +29,7 @@ double  mean(int n, char *list[]) {
 
 // median()
 //    int n, number of elements in list.
-//    int *list pointer to first element of a SORTED list.
+//    int *list, pointer to first element of a SORTED list.
 double median(int n , int *list) {
     if ((n-1) % 2 != 0) {
         return (double) list[(n-1)/2];
@@ -43,7 +46,7 @@ int main(int argc, char *argv[]) {
     // Check for proper usage
     if (argc < 2) {
         fprintf(stderr, "%s: Aborting, not enough arguments.\n", argv[0]);
-        return (-1);
+        return FAILURE;
     }
 
     // Determine amount of numbers from argc
@@ -70,8 +73,21 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr,"%s aborting: Could not fork\n", argv[0]);
+        return SUCCESS;
+    } 
+
+    if (rc == 0) {
+        // Child code.
+    }
+
+    if  (rc > 0) {
+        //parent code.
+    }
     // Calculate mean
     fprintf(stdout, "\nMean = %f\n", mean(argc,argv));
 

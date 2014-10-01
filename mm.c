@@ -95,5 +95,5 @@ int main(int argc, char *argv[]) {
     fprintf(stdout, "%s: DEBUG: rc = %d, PID = %d\n", argv[0],rc,getpid());
 #endif
     }
-    return 0;
+    return SUCCESS;
 }

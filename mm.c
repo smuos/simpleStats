@@ -27,6 +27,22 @@ double mean (int length, int *pt)
     return mean;
 }
 
+// median() function to calculate median
+double median (int length, int *pt)
+{
+    double median; 
+    if (length%2 == 0)
+    {
+        median = (pt[length/2 - 1] + pt[length/2])/2;
+    }
+    else
+    {
+        median = pt[length/2];
+    }
+    return median;
+}
+
+
 int main(int argc, char *argv[]) {
      
     int i, length, *pt;
@@ -58,7 +74,10 @@ int main(int argc, char *argv[]) {
     qsort(pt, length, sizeof(int), numcmp);
      
     //Mean
-    fprintf(stdout, "Mean: %d", mean(length, pt));  
+    fprintf(stdout, "Mean: %d", mean(length, pt));
+
+	//Median
+    fprintf(stdout, "Median: %d", median(length, pt));  
      
     // Print out numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);

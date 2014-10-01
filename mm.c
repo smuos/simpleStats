@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 #define debug 0
 #define SUCCESS 0
@@ -88,6 +89,7 @@ int main(int argc, char *argv[]) {
 
     if  (rc > 0) {
         //parent code.
+        wait(NULL); // wait until child is finished.
         fprintf(stdout,"Mean = %f\n", mean(argc,argv));
 #if debug
     fprintf(stdout, "%s: DEBUG: rc = %d, PID = %d\n", argv[0],rc,getpid());

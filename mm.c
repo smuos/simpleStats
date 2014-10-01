@@ -3,6 +3,26 @@
 
 #define debug 0
 
+
+
+//Add mean function
+float mean (int num[], int length)
+{
+    //Initial sum = 0
+    float sum = 0;
+    float mean;
+
+    //for loop to add up sum
+    for (int i = 0; i < length; i++)
+    {
+	sum = sum + num[i];
+    }
+   	mean = sum / length;
+    return mean;
+}
+
+
+
 // Comparison function for qsort()
 int numcmp (const void *a, const void *b) {
     int x = *((int*) a);

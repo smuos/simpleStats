@@ -42,7 +42,7 @@ double median(int n , int *list) {
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
-    
+
     // Check for proper usage
     if (argc < 2) {
         fprintf(stderr, "%s: Aborting, not enough arguments.\n", argv[0]);
@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
     if ((pt = malloc(length * sizeof(int))) == NULL) {
         fprintf(stderr, "%s: Could not allocate memory.\n", argv[0]);
     }
-        
+
     // Read numbers into array
     for (i = 0; i < length; i++) {
         pt[i] = (int) strtol(argv[i+1], NULL, 10);
@@ -68,28 +68,30 @@ int main(int argc, char *argv[]) {
     // Sort numbers
     qsort(pt, length, sizeof(int), numcmp);
 
-    // Print out numbers
-    fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
-    for (i=0; i<length; i++) {
-        fprintf(stdout, "%d ", pt[i]);
-    }
+    // Print out results
+    fprintf(stdout, "%s results: \n", argv[0]);
 
     int rc = fork();
 
     if (rc < 0) {
         fprintf(stderr,"%s aborting: Could not fork\n", argv[0]);
         return SUCCESS;
-    } 
+    }
 
     if (rc == 0) {
         // Child code.
         fprintf(stdout, "Median = %f\n", median(argc,pt));
+#if debug
+    fprintf(stdout, "%s: DEBUG: rc = %d, PID = %d\n",argv[0],rc,getpid());
+#endif
     }
 
     if  (rc > 0) {
         //parent code.
+        fprintf(stdout,"Mean = %f\n", mean(argc,argv));
+#if debug
+    fprintf(stdout, "%s: DEBUG: rc = %d, PID = %d\n", argv[0],rc,getpid());
+#endif
     }
-    // Calculate mean
-    fprintf(stdout, "\nMean = %f\n", mean(argc,argv));
     return 0;
 }

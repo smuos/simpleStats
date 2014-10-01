@@ -86,6 +86,7 @@ int main(int argc, char *argv[]) {
       fprintf(stdout, "median=%.2f\n", medianVal);
     } else { // parent goes down this path (main)
       meanVal = mean(pt, length);
+      fprintf(stdout, "mean=%.2f\n", meanVal);
       fprintf(stdout, "\n%s: FIN. \n", argv[0]);
     }
 

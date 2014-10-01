@@ -82,8 +82,8 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "Median: %d", median(length, pt));
     } else {             // parent
 		int wc = wait(NULL);
-        //printf("hello, I am parent of %d (wc:%d) (pid:%d)\n",
-          //      (int) rc, wc, getpid());
+        printf("hello, I am parent of %d (wc:%d) (pid:%d)\n",
+               (int) rc, wc, getpid());
         mean(length, pt);
        fprintf(stdout, "Mean: %d", mean(length, pt)); 
 	}

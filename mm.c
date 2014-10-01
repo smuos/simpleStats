@@ -71,7 +71,22 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+
+    fprintf(stdout, "\n");
+    fflush(stdout);
+
+    int rc = fork();
+    float medianVal, meanVal;
+
+    if (rc < 0) { // fork failed; exit
+      fprintf(stderr, "fork failed\n");
+      exit(1);
+    } else if (rc == 0) { //child (new process)
+      medianVal = median(pt, length);
+    } else { // parent goes down this path (main)
+      meanVal = mean(pt, length);
+      fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+    }
 
     return 0;
 }

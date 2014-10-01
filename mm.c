@@ -23,6 +23,21 @@ float mean (int num[], int length)
 
 
 
+//Add median function
+float median (int num[], int length)
+{
+    int medianNum = length / 2;
+    //Determine the size of array is even or odd
+    if (length % 2 == 0)
+    {
+	medianNum = (num[medianNum - 1] + num[medianNum]) / 2;
+    	return medianNum;
+    } else
+	return medianNum;
+}
+
+
+
 // Comparison function for qsort()
 int numcmp (const void *a, const void *b) {
     int x = *((int*) a);

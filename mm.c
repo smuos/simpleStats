@@ -87,6 +87,7 @@ int main(int argc, char *argv[]) {
     } else { // parent goes down this path (main)
       meanVal = mean(pt, length);
       fprintf(stdout, "mean=%.2f\n", meanVal);
+      wait(NULL);
       fprintf(stdout, "\n%s: FIN. \n", argv[0]);
     }
 

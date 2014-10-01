@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define debug 0
 
@@ -78,10 +79,28 @@ int main(int argc, char *argv[]) {
 
     // Print out numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
+
+
+    //Add fork function
+    int rc = fork();
+
+    if (rc < 0)
+    {
+        fprintf(stderr, "Fork failed. \n");
+    //Child process
+    } else if (rc == 0) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+	//Child call median() function
+        fprintf(stdout, "\nThe median is: %.02f ", median (pt, length));
+    } else {
+        //Wait for parent process
+        wait(NULL);
+	//Parent call mean() function
+        fprintf(stdout, "\nThe mean is: %.02f", mean (pt, length));
 
+    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+    }
     return 0;
 }

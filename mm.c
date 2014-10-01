@@ -12,6 +12,19 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+// function to calculate mean
+float mean(const int* a, int n){
+  float avg =0;
+  int i;
+
+  for(i=0; i<n ; i++)
+    avg += a[i];
+
+  avg /= n;
+
+  return avg;
+}
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;

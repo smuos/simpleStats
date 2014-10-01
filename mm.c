@@ -83,6 +83,7 @@ int main(int argc, char *argv[]) {
       exit(1);
     } else if (rc == 0) { //child (new process)
       medianVal = median(pt, length);
+      fprintf(stdout, "median=%.2f\n", medianVal);
     } else { // parent goes down this path (main)
       meanVal = mean(pt, length);
       fprintf(stdout, "\n%s: FIN. \n", argv[0]);

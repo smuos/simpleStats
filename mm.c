@@ -25,6 +25,18 @@ float mean(const int* a, int n){
   return avg;
 }
 
+// function to calculate median
+float median(const int* a, int n){
+  float med = 0;
+
+  if(n % 2 == 0)
+    med = ( a[n/2-1] + a[n/2] ) / 2.0;
+  else
+    med = a[n/2];
+
+  return med;
+}
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;

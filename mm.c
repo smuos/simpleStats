@@ -12,6 +12,18 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+// mean()
+//    int n,  the length of the list
+//    char *list[], command line argument. Data starts at index 1. 
+double  mean(int n, char *list[]) {
+    int sum = 0;
+    int i;
+    for(i = 1; i < n; i++) {
+        sum +=  atoi(list[i]);
+    }
+    return (double) sum / (double)(n-1);
+}
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;
@@ -47,6 +59,9 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "%d ", pt[i]);
     }
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+
+    // Calculate mean
+    fprintf(stdout, "\nMean = %f\n", mean(argc,argv));
 
     return 0;
 }

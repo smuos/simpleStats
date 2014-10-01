@@ -73,12 +73,20 @@ int main(int argc, char *argv[]) {
     // Sort numbers
     qsort(pt, length, sizeof(int), numcmp);
      
-    //Mean
-    fprintf(stdout, "Mean: %d", mean(length, pt));
-
-	//Median
-    fprintf(stdout, "Median: %d", median(length, pt));  
-     
+    int rc = fork();
+	if (rc < 0) {		//fork failed; exit
+		fprintf(stderr, "fork failed\n");
+		exit(1);
+	} else if (rc == 0) { // child
+		median(length, pt);
+       // fprintf(stdout, "Median: %d", median(length, pt));
+    } else {             // parent
+		int wc = wait(NULL);
+        //printf("hello, I am parent of %d (wc:%d) (pid:%d)\n",
+          //      (int) rc, wc, getpid());
+        mean(length, pt);
+       // fprintf(stdout, "Mean: %d", mean(length, pt)); 
+	}
     // Print out numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
     for (i=0; i<length; i++) {

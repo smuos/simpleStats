@@ -1,3 +1,8 @@
+//Kashif Kashif
+//A00369617
+//OS: Submission 2
+//Command to run: ./mm.out 1 2 3 4 5
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -13,15 +18,15 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
-float mean (int* values, int length) { //float function to calculate upto two decimal places
-    float sum = 0;
+double mean (int* values, int length) { //calculates mean, precision is already set to two decimal places
+    double sum = 0;
     for (int i = 0; i < length; i++) {
       sum +=values[i];
       }
     return sum / length;
 }
 
-float median (int* values, int length) {
+double median (int* values, int length) { ////calculates median, precision is already set to two decimal places
     int middle = length / 2;
     if (length % 2 == 0) { //check if the total number is even/odd
         return(values[middle - 1] + values[middle]) / 2;
@@ -72,8 +77,8 @@ int main(int argc, char *argv[]) {
     fprintf(stdout, "\n%s:(%d C) Median =  %.2f", argv[0], 
         (int)getpid(), median(pt, length));
     } else if (slice > 0) {
-    int pause = wait(NULL); //system call to make parent wait
-    fprintf(stdout, "\n%s:(%d P, %d PS) Mean is: %.3f", argv[0],
+    int pause = wait(NULL); //system call to make parent wait and then print the mean
+    fprintf(stdout, "\n%s:(%d P, %d PS) Mean is: %.2f", argv[0],
         (int)getpid(), pause, mean(pt, length));
     }
 

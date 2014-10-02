@@ -78,34 +78,33 @@ int main(int argc, char *argv[]) {
     // Creating a fork process
     int frk = fork();
    
-    if (frk < -1)
+    if (frk < 0)
     {
        fprintf(stdout, "Something is wrong");
        exit(0);
     }
 
-    if(frk == 1) // child
+    if(frk == 0) // child
     {
         // Find the median of the numbers
         mediancomp = median(pt,length);    
-       fprintf(stdout,"\nThe median of the numbers are: %f",mediancomp);
+        fprintf(stdout,"\nThe median of the numbers are: %f",mediancomp);
      }
     
-    if (frk == 2) //parent
+    if (frk > 0) //parent
     {
+         int wc = wait(NULL);
          // Find the mean of the numbers
          meancomp =  mean(pt,length);	
          fprintf(stdout,"\nThe mean of the numbers are: %f",meancomp);
-     }
+        
 
-    // Print out numbers
-    fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
-    for (i=0; i<length; i++) {
-        fprintf(stdout, "%d ", pt[i]);
+         // Print out numbers
+         fprintf(stdout, "\nSorted output is: \n");
+         for (i=0; i<length; i++) {
+         fprintf(stdout, "%d ", pt[i]);
+         }
+         fprintf(stdout, "\nFIN. \n");
     }
-    fprintf(stdout,"\nThe mean of the numbers are: %f",meancomp);
-    fprintf(stdout,"\nThe median of the numbers are: %f",mediancomp);
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
-
     return 0;
 }

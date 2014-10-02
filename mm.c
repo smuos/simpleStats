@@ -71,6 +71,10 @@ int main(int argc, char *argv[]) {
     } else if (slice == 0) { //print the median
     fprintf(stdout, "\n%s:(%d C) Median =  %.2f", argv[0], 
         (int)getpid(), median(pt, length));
+    } else if (slice > 0) {
+    int pause = wait(NULL); //system call to make parent wait
+    fprintf(stdout, "\n%s:(%d P, %d PS) Mean is: %.3f", argv[0],
+        (int)getpid(), pause, mean(pt, length));
     }
 
 

@@ -98,6 +98,6 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "\nThe mean is: %.2f \n", mean(pt, length));
     }   
 
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+    fprintf(stdout, "%s: FIN. \n\n", argv[0]);
     return 0;
 }

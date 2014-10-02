@@ -12,6 +12,15 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+float mean (int* values, int length) { //float function to calculate upto two decimal places
+    float sum = 0;
+    for (int i=0; i<ength; i++) {
+      sum +=values[i];
+      }
+    return sum / length;
+}
+
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;

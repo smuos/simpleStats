@@ -2,22 +2,19 @@
 #include <stdio.h>
 
 #define debug 0
+#define SUCCESS  1
+#define FAILURE -1
 
 // Function to find the mean of the integers
-int mean (int x[], int n) {
-    int m;
-    int sum = 0;
-    for (int i = 0; i < n; i++){
+float mean (int x[], int n) {
+    float m;
+    int i;
+    float sum = 0;
+    for (i = 0; i < n; i++){
         sum += x[i];
     }
     m = sum / n;
     return m;
-}
-
-// Function to find the median of the integers
-int mean (int x[], int n) {
-    qsort(x, n, sizeof(int), numcmp);
-    return x[n/2];
 }
 
 // Comparison function for qsort()
@@ -27,6 +24,21 @@ int numcmp (const void *a, const void *b) {
     if (x > y) return 1;
     if (x < y) return -1;
     return 0;
+}
+
+// Function to find the median of the integers
+float median (int x[], int n) {
+    float y;
+    int p = n/2;
+    qsort(x, n, sizeof(int), numcmp);
+    if((n%2) == 0)
+    {
+        y=x[p-1] + x[p];
+        y = y/2;
+        return y;
+    }
+    else
+        return x[p];
 }
 
 int main(int argc, char *argv[]) {
@@ -72,13 +84,13 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "OS too hard, could not cut.\n");
         exit(0);
     } else if (rc == 0) {
-        int me = median ( pt, length);
-        fprintf(stdout, "%d ", me);
+        float me = median ( pt, length);
+        fprintf(stdout, "Median = %f \n", me);
         exit(1);
     } else if (rc > 0) {
         int wc = waitpid(rc,&status,0); //wait for child to finish
-        int m = mean( pt, length); 
-        fprintf(stdout, "%d ", m);
+        float m = mean( pt, length); 
+        fprintf(stdout, "Mean = %f \n", m);
     }
     return SUCCESS;
 }

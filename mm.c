@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <sys/wait.h>
-#include <sys/types.h>
 
 
 #define debug 0
@@ -76,16 +75,15 @@ int main(int argc, char *argv[]) {
 	//fork added below, copied from the first lab
 	  int rc = fork(); //slice off another process
 	  if (rc == -1) { //fork() returns -1, exit with error message.
-		// Could not cut another process
-		fprintf(stdout, "OS too hard, could not cut.\n");
+		fprintf(stdout, "Fork failed");
 		exit(FAILURE);
 	  } else if (rc == 0) { //when fork() returns 0, exit with success message.
 		float medianV = median(pt,length);	//child calls median
-		fprintf(stdout, "The median value is: %.2f: ", medianV);
+		fprintf(stdout, "The median value is: %.2f, it's child process. \n", medianV);
 	  } else { //when fork() returns others nums, create new child 
 		wait(NULL); //is child finished?
 		float meanV = mean(pt,length);	//parent calls mean
-		fprintf(stdout, "The mean value is: %.2f: ", meanV);
+		fprintf(stdout, "The mean value is: %.2f, it's parent process. \n", meanV);
 	  }
 	  return SUCCESS;
 }

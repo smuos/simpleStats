@@ -88,19 +88,18 @@ int main(int argc, char *argv[]) {
     {
         // Find the median of the numbers
         mediancomp = median(pt,length);    
-        fprintf(stdout,"\nThe median of the numbers are: %f",mediancomp);
+        fprintf(stdout,"\nThe median of the numbers are: %.2f\n",mediancomp);
      }
     
     if (frk > 0) //parent
     {
-         int wc = wait(NULL);
          // Find the mean of the numbers
          meancomp =  mean(pt,length);	
-         fprintf(stdout,"\nThe mean of the numbers are: %f",meancomp);
+         fprintf(stdout,"\nThe mean of the numbers are: %.2f\n",meancomp);
         
 
          // Print out numbers
-         fprintf(stdout, "\nSorted output is: \n");
+         fprintf(stdout, "Sorted output is: \n");
          for (i=0; i<length; i++) {
          fprintf(stdout, "%d ", pt[i]);
          }

@@ -1,27 +1,38 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define debug 0
-
-//Median calculating function
-int median(int *pt, int length)
-{
-    int middle = (length/2);
-    int median = pt[middle];
-    return median;
-}
 
 //Mean calculating function
 double mean(int *pt, int length)
 {
     int sum = 0;
-    double mean = 0;
     for(int i = 0; i < length; i++)
     {
         sum = sum + pt[i];
     }
-    mean = ((double)sum/length);
-    return mean;
+    return ((double)sum/length);
+}
+
+//Median calculating function
+double median(int *pt, int length)
+{	
+    if(length % 2 == 1)
+    {
+        return pt[(length/2)];
+    }
+    else
+    {
+	int* midVals;
+        if((midVals = malloc(2 * sizeof(int))) == NULL) 
+        {
+            fprintf(stderr, "Could not allocate memory.\n");
+        }
+        midVals[0] = pt[((length/2) - 1)];
+        midVals[1] = pt[(length/2)];
+        return mean(midVals, 2);
+    }
 }
 
 // Comparison function for qsort()
@@ -73,6 +84,6 @@ int main(int argc, char *argv[]) {
     fprintf(stdout, "The mean is: %.2f \n", mean(pt, length));
 
     // Call median function
-    fprintf(stdout, "The median is: %d \n", median(pt, length));
+    fprintf(stdout, "The median is: %.2f \n", median(pt, length));
     return 0;
 }

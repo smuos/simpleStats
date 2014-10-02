@@ -1,7 +1,15 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <stdbool.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+
 
 #define debug 0
+#define SUCCESS  0 //changed from 1 to 0
+#define FAILURE -1 //changed from 0 to -1
+
 
 // Comparison function for qsort()
 int numcmp (const void *a, const void *b) {
@@ -25,7 +33,7 @@ float mean(int nums[], int size)	//mean function for calculation the mean of an 
 
 float median(int nums[], int size)	//median function for calculation the mean of an array of float numbers
 {
-  	if(size%2==0)return (nums[size/2-1]+nums[size/2])/2;	//if the array has an even number of integers, we calculate the mean of two numbers in the middle
+  	if(size%2==0)return (nums[(size/2)-1]+nums[size/2])/2;	//if the array has an even number of integers, we calculate the mean of two numbers in the middle
   	else return nums[size/2];
 }
 
@@ -64,6 +72,18 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "%d ", pt[i]);
     }
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
-
-    return 0;
+	
+	//fork added below, copied from the first lab
+	  int rc = fork(); //slice off another process
+	  if (rc == -1) { //fork() returns -1, exit with error message.
+		// Could not cut another process
+		fprintf(stdout, "OS too hard, could not cut.\n");
+		exit(FAILURE);
+	  } else if (rc == 0) { //when fork() returns 0, exit with success message.
+		float median = median(pt,length);	//child calls median
+	  } else { //when fork() returns others nums, create new child 
+		wait(NULL); //is child finished?
+		float meanV = mean(pt,length);	//parent calls mean
+	  }
+	  return SUCCESS;
 }

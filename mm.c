@@ -57,6 +57,9 @@ int main(int argc, char *argv[]) {
         pt[i] = (int) strtol(argv[i+1], NULL, 10);
     }
 
+    // Sort numbers
+    qsort(pt, length, sizeof(int), numcmp);
+
     int rc = fork();
     if (rc == -1) {
         // could not fork another process

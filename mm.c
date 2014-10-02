@@ -78,12 +78,26 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
+    
+    // Fork() child calls median, parent calls mean.
+    int rc = fork();
+    if(rc == -1)
+    {
+        fprintf(stdout, "Could not create another process.\n");
+        exit(0);
+    }
+    else if(rc == 0)
+    {
+        //if fork was successful, child calls and prints median.
+        fprintf(stdout, "\nThe median is: %.2f \n", median(pt, length));
+    }
+    else if(rc > 0)
+    {
+        wait(NULL); //checks to see if child is finished
+        //if child is finished, parent calls ad prints mean.
+        fprintf(stdout, "\nThe mean is: %.2f \n", mean(pt, length));
+    }   
+
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
-
-    // Call mean function
-    fprintf(stdout, "The mean is: %.2f \n", mean(pt, length));
-
-    // Call median function
-    fprintf(stdout, "The median is: %.2f \n", median(pt, length));
     return 0;
 }

@@ -64,7 +64,8 @@ int main(int argc, char *argv[]) {
         int med = median(pt, length);
 	fprintf(stdout, "%d ", med);
     } else if (rc > 0) { // parent runs mean:
-        int avg = mean(pt, length);
+        int wc = wait(NULL); // waits until child has finished
+	int avg = mean(pt, length);
 	fprintf(stdout, "%d ", avg);
     }
 

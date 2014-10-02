@@ -12,6 +12,15 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+// Function to calculate the mean of a vector
+int mean (int *v, int length) {
+    int i;
+    int sum = 0;
+    for(i = 0; i < length; i++) {
+    sum = sum + v[i];
+    }
+}
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;

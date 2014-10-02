@@ -27,7 +27,7 @@ float median (int* values, int length) {
     } else {
         return values[middle];
     }
-
+}
 
 int main(int argc, char *argv[]) {
 

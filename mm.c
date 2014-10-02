@@ -79,6 +79,7 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "%d ", pt[i]);
     }
     
+    fflush(stdout);
     // Fork() child calls median, parent calls mean.
     int rc = fork();
     if(rc == -1)
@@ -98,6 +99,6 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "\nThe mean is: %.2f \n", mean(pt, length));
     }   
 
-    fprintf(stdout, "%s: FIN. \n\n", argv[0]);
+    fprintf(stdout, "\n%s:(pid:%d) FIN. \n", argv[0], getpid());
     return 0;
 }

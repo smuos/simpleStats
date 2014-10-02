@@ -19,6 +19,14 @@ int mean (int *v, int length) {
     for(i = 0; i < length; i++) {
     sum = sum + v[i];
     }
+    return sum/length;
+}
+
+int median (int *v, int length) {
+    if (length%2 == 1)
+        return v[(length/2)];
+    if (length%2 == 0)
+        return ((v[(length/2)-1]+v[(length)/2])/2);
 }
 
 int main(int argc, char *argv[]) {

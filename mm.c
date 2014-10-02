@@ -14,11 +14,19 @@ int numcmp (const void *a, const void *b) {
 
 float mean (int* values, int length) { //float function to calculate upto two decimal places
     float sum = 0;
-    for (int i=0; i<ength; i++) {
+    for (int i = 0; i < ength; i++) {
       sum +=values[i];
       }
     return sum / length;
 }
+
+float median (int* values, int length) {
+    int middle = length / 2;
+    if (length % 2 == 0) { //check if the total number is even/odd
+        return(values[middle - 1] + values[middle]) / 2;
+    } else {
+        return values[middle];
+    }
 
 
 int main(int argc, char *argv[]) {

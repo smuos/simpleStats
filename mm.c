@@ -67,18 +67,13 @@ int main(int argc, char *argv[]) {
 	exit(-1);
     } else if (rc == 0) { // child runs median:
         int med = median(pt, length);
-	fprintf(stdout, "%d ", med);
+	fprintf(stdout, "Median = %d ", med);
     } else if (rc > 0) { // parent runs mean:
-        int wc = wait(NULL); // waits until child has finished
+        wait(NULL); // waits until child has finished
 	int avg = mean(pt, length);
-	fprintf(stdout, "%d ", avg);
+	fprintf(stdout, "Mean = %d ", avg);
     }
 
-    // Print out numbers
-    fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
-    for (i=0; i<length; i++) {
-        fprintf(stdout, "%d ", pt[i]);
-    }
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
     return 0;

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 #define debug 0
 
@@ -28,6 +29,7 @@ float mean (int num[], int length)
 float median (int num[], int length)
 {
     int medianNum = length / 2;
+
     //Determine the size of array is even or odd
     if (length % 2 == 0)
     {
@@ -89,18 +91,20 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Fork failed. \n");
     //Child process
     } else if (rc == 0) {
-    for (i=0; i<length; i++) {
-        fprintf(stdout, "%d ", pt[i]);
+    	for (i=0; i<length; i++) {
+        	fprintf(stdout, "%d ", pt[i]);
     }
-	//Child call median() function
-        fprintf(stdout, "\nThe median is: %.02f ", median (pt, length));
+
+    //Child call median() function and cout median
+    fprintf(stdout, "\nThe median is: %.02f ", median (pt, length));
     } else {
+
         //Wait for parent process
         wait(NULL);
-	//Parent call mean() function
-        fprintf(stdout, "\nThe mean is: %.02f", mean (pt, length));
 
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+	//Parent call mean() function and cout mean
+        fprintf(stdout, "\nThe mean is: %.02f", mean (pt, length));
+        fprintf(stdout, "\n%s: FIN. \n", argv[0]);
     }
     return 0;
 }

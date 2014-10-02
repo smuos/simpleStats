@@ -12,6 +12,17 @@ int numcmp (const void *a, const void *b) {
     return 0;
 }
 
+float mean(int nums[], int size)	//mean function for calculation the mean of an array of float numbers
+{
+  	float sum=0;
+    for (int i = 0; i <=size-1; i++)
+    {
+		sum +=nums[i];
+    }
+
+   	return sum/size;
+}
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;

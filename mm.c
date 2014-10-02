@@ -6,12 +6,18 @@
 // Function to find the mean of the integers
 int mean (int x[], int n) {
     int m;
-    int sum;
+    int sum = 0;
     for (int i = 0; i < n; i++){
         sum += x[i];
     }
     m = sum / n;
     return m;
+}
+
+// Function to find the median of the integers
+int mean (int x[], int n) {
+    qsort(x, n, sizeof(int), numcmp);
+    return x[n/2];
 }
 
 // Comparison function for qsort()

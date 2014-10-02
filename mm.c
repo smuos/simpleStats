@@ -73,10 +73,12 @@ int main(int argc, char *argv[]) {
         exit(0);
     } else if (rc == 0) {
         int m = mean( pt, length); 
+        fprintf(stdout, "%d ", m);
         exit(1);
     } else if (rc > 0) {
         int wc = waitpid(rc,&status,0); //wait for child to finish
         int me = median ( pt, length);
+        fprintf(stdout, "%d ", me);
     }
     return SUCCESS;
 }

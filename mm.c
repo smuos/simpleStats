@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define debug 0
 
@@ -59,10 +60,20 @@ int main(int argc, char *argv[]) {
     qsort(pt, length, sizeof(int), numcmp);
 
     // Print out numbers
-    fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
+    fprintf(stdout, "%s:(%d) Sorted output is: \n", argv[0], (int)getpid());
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
+    
+    int slice = fork(); //system call
+    if (slice < 0) {
+    fprintf(stderr, "%s: Failure: fork didnt run properly!);
+    } else if (slice == 0) { //print the median
+    fprintf(stdout, "\n%s:(%d C) Median =  %.2f", argv[0], 
+        (int)getpid(), median(pt, length));
+    }
+
+
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
 
     return 0;

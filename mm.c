@@ -1,18 +1,21 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 #define debug 0
 
-float mean(int length, int *pt) {
+// Calculate the mean
+double mean(int length, int *pt) {
     int i, total=0;
     for(i=0; i<length; i++) {
         total=total+pt[i];
     }
-    return ((float)total/length);
+    return ((double)total/length);
 }
 
-float median(int length, int *pt) {
+// Calculate the median
+double median(int length, int *pt) {
     if(length%2==1) return pt[length/2];
     else {
         int *pt2;
@@ -68,16 +71,23 @@ int main(int argc, char *argv[]) {
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
+    
+    // Clear stdout
+    fflush(stdout);
+
     int rc = fork();
     if (rc == -1) {
         fprintf(stdout, "Could not create another process.\n");
         exit(0);
     }
     else if (rc == 0) {
-    fprintf(stdout, "\nMedian: %.2f", median(length, pt));
+        // Child prints median
+        fprintf(stdout, "\n\nMedian: %.2f", median(length, pt));
     }
     else if (rc > 0) {
-        wait(NULL); //is child finished?
+        // Parent waits for child
+        wait(NULL);
+        // Parent prints mean
         fprintf(stdout, "\nMean: %.2f", mean(length, pt));
     }
     fprintf(stdout, "\n%s: FIN. (pid:%d)\n", argv[0], getpid());

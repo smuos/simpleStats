@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
 
     int i, length, *pt;
     /* my vars */
-    int meanVal, medianVal;
+    int meanVal, medianVal, wc;
     
     // Check for proper usage
     if (argc < 2) {
@@ -71,11 +71,12 @@ int main(int argc, char *argv[]) {
     qsort(pt, length, sizeof(int), numcmp);
 
     // Print out numbers
+    /*
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);
     for (i=0; i<length; i++) {
         fprintf(stdout, "%d ", pt[i]);
     }
-
+    */
 
     /* Forking!!! :O */
 
@@ -87,12 +88,13 @@ int main(int argc, char *argv[]) {
         medianVal = median(pt, length);
         fprintf(stdout, "Median: %d\n", medianVal);
     } else {
+        wc = wait(NULL);
         meanVal = mean(pt, length);
         fprintf(stdout, "Mean: %d\n", meanVal);
     } 
 
     /* That's all, folks */
-    fprintf(stdout, "\n%s: FIN. \n", argv[0]);
+    /* fprintf(stdout, "\n%s: FIN. \n", argv[0]); */
 
     
     return 0;

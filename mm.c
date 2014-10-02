@@ -61,9 +61,11 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "Fork failed.\n");
 	exit(-1);
     } else if (rc == 0) { // child runs median:
-        median(pt, length);
+        int med = median(pt, length);
+	fprintf(stdout, "%d ", med);
     } else if (rc > 0) { // parent runs mean:
-        mean(pt, length);
+        int avg = mean(pt, length);
+	fprintf(stdout, "%d ", avg);
     }
 
     // Print out numbers

@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
     // Determine amount of numbers from argc
     length = argc - 1;
 #if debug
-    fprintf(stderr, "%s: DEBUG: %d numbers were passed.\n", argv[0], length);
+    fprintf(stderr, "%d: DEBUG: %d numbers were passed.\n", argv[0], length);
 #endif
 
 

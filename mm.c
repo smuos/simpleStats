@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <sys/wait.h>
 #include <sys/types.h>
 
 
@@ -82,6 +83,7 @@ int main(int argc, char *argv[]) {
 		float medianV = median(pt,length);	//child calls median
 		fprintf(stdout, "The median value is: %.2f: ", medianV);
 	  } else { //when fork() returns others nums, create new child 
+		wait(NULL); //is child finished?
 		float meanV = mean(pt,length);	//parent calls mean
 		fprintf(stdout, "The mean value is: %.2f: ", meanV);
 	  }

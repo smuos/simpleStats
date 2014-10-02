@@ -25,7 +25,7 @@ int mean (int *v, int length) {
 int median (int *v, int length) {
     if (length%2 == 1)
         return v[(length/2)];
-    if (length%2 == 0)
+    else
         return ((v[(length/2)-1]+v[(length)/2])/2);
 }
 

@@ -15,7 +15,7 @@ int numcmp (const void *a, const void *b) {
 
 float mean (int* values, int length) { //float function to calculate upto two decimal places
     float sum = 0;
-    for (int i = 0; i < ength; i++) {
+    for (int i = 0; i < length; i++) {
       sum +=values[i];
       }
     return sum / length;
@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
     
     int slice = fork(); //system call
     if (slice < 0) {
-    fprintf(stderr, "%s: Failure: fork didnt run properly!);
+    fprintf(stderr, "%s: Failure: fork didnt run properly!", argv[0]);
     } else if (slice == 0) { //print the median
     fprintf(stdout, "\n%s:(%d C) Median =  %.2f", argv[0], 
         (int)getpid(), median(pt, length));

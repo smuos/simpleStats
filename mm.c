@@ -55,8 +55,16 @@ int main(int argc, char *argv[]) {
         pt[i] = (int) strtol(argv[i+1], NULL, 10);
     }
 
-    // Sort numbers
-    qsort(pt, length, sizeof(int), numcmp);
+    int rc = fork();
+    if (rc == -1) {
+        // could not fork another process
+        fprintf(stdout, "Fork failed.\n");
+	exit(-1);
+    } else if (rc == 0) { // child runs median:
+        median(pt, length);
+    } else if (rc > 0) { // parent runs mean:
+        mean(pt, length);
+    }
 
     // Print out numbers
     fprintf(stdout, "%s: Sorted output is: \n", argv[0]);

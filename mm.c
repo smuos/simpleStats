@@ -23,6 +23,12 @@ float mean(int nums[], int size)	//mean function for calculation the mean of an 
    	return sum/size;
 }
 
+float median(int nums[], int size)	//median function for calculation the mean of an array of float numbers
+{
+  	if(size%2==0)return (nums[size/2-1]+nums[size/2])/2;	//if the array has an even number of integers, we calculate the mean of two numbers in the middle
+  	else return nums[size/2];
+}
+
 int main(int argc, char *argv[]) {
 
     int i, length, *pt;

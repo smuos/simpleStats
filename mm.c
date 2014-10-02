@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdbool.h>
-#include <sys/wait.h>
 #include <sys/types.h>
 
 
@@ -80,10 +79,11 @@ int main(int argc, char *argv[]) {
 		fprintf(stdout, "OS too hard, could not cut.\n");
 		exit(FAILURE);
 	  } else if (rc == 0) { //when fork() returns 0, exit with success message.
-		float median = median(pt,length);	//child calls median
+		float medianV = median(pt,length);	//child calls median
+		fprintf(stdout, "The median value is: %.2f: ", medianV);
 	  } else { //when fork() returns others nums, create new child 
-		wait(NULL); //is child finished?
 		float meanV = mean(pt,length);	//parent calls mean
+		fprintf(stdout, "The mean value is: %.2f: ", meanV);
 	  }
 	  return SUCCESS;
 }

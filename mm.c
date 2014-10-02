@@ -64,6 +64,19 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "%d ", pt[i]);
     }
     fprintf(stdout, "\n%s: FIN. \n", argv[0]);
-
-    return 0;
+    
+    int rc = fork(); //slice off another process
+    int status;
+    if (rc < -1) {
+        // Could not cut another process
+        fprintf(stdout, "OS too hard, could not cut.\n");
+        exit(0);
+    } else if (rc == 0) {
+        int m = mean( pt, length); 
+        exit(1);
+    } else if (rc > 0) {
+        int wc = waitpid(rc,&status,0); //wait for child to finish
+        int me = median ( pt, length);
+    }
+    return SUCCESS;
 }

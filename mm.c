@@ -3,6 +3,17 @@
 
 #define debug 0
 
+// Function to find the mean of the integers
+int mean (int x[], int n) {
+    int m;
+    int sum;
+    for (int i = 0; i < n; i++){
+        sum += x[i];
+    }
+    m = sum / n;
+    return m;
+}
+
 // Comparison function for qsort()
 int numcmp (const void *a, const void *b) {
     int x = *((int*) a);

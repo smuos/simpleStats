@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define debug 0
 
@@ -76,7 +77,7 @@ int main(int argc, char *argv[]) {
     fprintf(stdout, "\nMedian: %.2f", median(length, pt));
     }
     else if (rc > 0) {
-        int wc = wait(NULL); //is child finished?
+        wait(NULL); //is child finished?
         fprintf(stdout, "\nMean: %.2f", mean(length, pt));
     }
     fprintf(stdout, "\n%s: FIN. (pid:%d)\n", argv[0], getpid());
